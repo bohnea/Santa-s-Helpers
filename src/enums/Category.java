@@ -24,6 +24,10 @@ public enum Category {
 
     private final String value;
 
+    public String getValue() {
+        return value;
+    }
+
     Category(final String value) {
         this.value = value;
     }

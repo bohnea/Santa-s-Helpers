@@ -1,0 +1,147 @@
+
+    private static Input readInputButWorse(JSONObject data) {
+        // Declare input variables
+        int numberOfYears;
+        double santaBudget;
+        InitialDataInput initialDataInput;
+        List<AnnualUpdateInput> annualUpdateInput;
+
+        // Get the variables from the JSON data
+        numberOfYears = ((Number) data.get(Constants.NUMBER_OF_YEARS)).intValue();
+        santaBudget = ((Number) data.get(Constants.SANTA_BUDGET)).doubleValue();
+        initialDataInput = readInitialData((JSONObject) data.get(Constants.INITIAL_DATA));
+
+        annualUpdateInput = new ArrayList<>();
+        for (Object obj: (JSONArray) data.get(Constants.ANNUAL_CHANGES)) {
+            annualUpdateInput.add(readAnnualUpdate((JSONObject) obj));
+        }
+
+        // Return the input data as an object
+        return new Input(numberOfYears, santaBudget, initialDataInput, annualUpdateInput);
+    }
+
+    private static InitialDataInput readInitialData(JSONObject data) {
+        // Declare input variables
+        List<ChildInput> childInput;
+        List<GiftInput> giftInput;
+
+        // Get the variables from the JSON data
+        childInput = new ArrayList<>();
+        for (Object obj: (JSONArray) data.get(Constants.CHILDREN)) {
+            childInput.add(readChild((JSONObject) obj));
+        }
+
+        giftInput = new ArrayList<>();
+        for (Object obj: (JSONArray) data.get(Constants.SANTA_GIFTS_LIST)) {
+            giftInput.add(readGift((JSONObject) obj));
+        }
+
+        // Return the initial data input as an object
+        return new InitialDataInput(childInput, giftInput);
+    }
+
+    private static AnnualUpdateInput readAnnualUpdate(JSONObject data) {
+        // Declare input variables
+        double newSantaBudget;
+        List<GiftInput> newGifts;
+        List<ChildInput> newChildren;
+        List<ChildUpdateInput> childrenUpdates;
+
+        // Get the variables from the JSON data
+        newSantaBudget = ((Number) data.get(Constants.NEW_SANTA_BUDGET)).doubleValue();
+
+        newGifts = new ArrayList<>();
+        for (Object obj: (JSONArray) data.get(Constants.NEW_GIFTS)) {
+            newGifts.add(readGift((JSONObject) obj));
+        }
+
+        newChildren = new ArrayList<>();
+        for (Object obj: (JSONArray) data.get(Constants.NEW_CHILDREN)) {
+            newChildren.add(readChild((JSONObject) obj));
+        }
+
+        childrenUpdates = new ArrayList<>();
+        for (Object obj: (JSONArray) data.get(Constants.CHILDREN_UPDATES)) {
+            childrenUpdates.add(readChildUpdate((JSONObject) obj));
+        }
+
+        // Return the annual update input as an object
+        return new AnnualUpdateInput(newSantaBudget, newGifts, newChildren, childrenUpdates);
+    }
+
+    private static ChildInput readChild(JSONObject data) {
+        // Declare input variables
+        int id;
+        String lastName;
+        String firstName;
+        int age;
+        Cities city;
+        double niceScore;
+        List<Category> giftsPreferences;
+
+        // Get the variables from the JSON data
+        id = ((Number) data.get(Constants.ID)).intValue();
+        lastName = (String) data.get(Constants.LAST_NAME);
+        firstName = (String) data.get(Constants.FIRST_NAME);
+        age = ((Number) data.get(Constants.AGE)).intValue();
+        city = Utils.cityStringToEnum((String) data.get(Constants.CITY));
+        niceScore = ((Number) data.get(Constants.NICE_SCORE)).doubleValue();
+
+        giftsPreferences = new ArrayList<>();
+        for (Object obj: (JSONArray) data.get(Constants.GIFTS_PREFERENCES)) {
+            giftsPreferences.add(Utils.categoryStringToEnum((String) obj));
+        }
+
+        // Return the child input as an object
+        return new ChildInput(id, lastName, firstName, age, city, niceScore, giftsPreferences);
+    }
+
+    private static GiftInput readGift(JSONObject data) {
+        // Declare input variables
+        String productName;
+        double price;
+        Category category;
+
+        // Get the variables from the JSON data
+        productName = (String) data.get(Constants.PRODUCT_NAME);
+        price = ((Number) data.get(Constants.PRICE)).doubleValue();
+        category = Utils.categoryStringToEnum((String) data.get(Constants.CATEGORY));
+
+        // Return the gift input as an object
+        return new GiftInput(productName, price, category);
+    }
+
+    private static ChildUpdateInput readChildUpdate(JSONObject data) {
+        // Declare input variables
+        int id;
+        double niceScore;
+        List<Category> giftsPreferences;
+
+        // Get the variables from the JSON data
+        id = ((Number) data.get(Constants.ID)).intValue();
+        niceScore = ((Number) data.get(Constants.ID)).doubleValue();
+
+        giftsPreferences = new ArrayList<>();
+        for (Object obj: (JSONArray) data.get(Constants.GIFTS_PREFERENCES)) {
+            giftsPreferences.add(Utils.categoryStringToEnum((String) obj));
+        }
+
+        // Return the child update input as an object
+        return new ChildUpdateInput(id, niceScore, giftsPreferences);
+    }
+
+    public static Input readInputFile(final int index) {
+        // Create a JSON parser
+        JSONParser parser = new JSONParser();
+
+        // Get the input file
+        File inputFile = new File(Constants.INPUT_PATH + index + Constants.FILE_EXTENSION);
+
+        try {
+            // Read the data, create the input object and return it
+            return (JSONObject) parser.parse(new FileReader(inputFile));
+        } catch (IOException | ParseException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
