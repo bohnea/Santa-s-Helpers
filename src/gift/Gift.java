@@ -4,11 +4,11 @@ import database.DatabaseTrackable;
 import enums.Category;
 
 public class Gift implements DatabaseTrackable {
-    private String productName;
-    private Double price;
-    private Category category;
+    private final String productName;
+    private final Double price;
+    private final Category category;
 
-    public Gift(String productName, Double price, Category category) {
+    public Gift(final String productName, final Double price, final Category category) {
         this.productName = productName;
         this.price = price;
         this.category = category;
