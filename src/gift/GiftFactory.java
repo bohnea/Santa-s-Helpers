@@ -1,6 +1,6 @@
 package gift;
 
-import io.GiftInput;
+import io.input.gift.GiftInput;
 
 public class GiftFactory {
     public static Gift createGift(GiftInput giftInput) {

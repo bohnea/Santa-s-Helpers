@@ -1,6 +1,6 @@
 package child;
 
-import io.ChildInput;
+import io.input.child.ChildInput;
 
 import java.util.List;
 
