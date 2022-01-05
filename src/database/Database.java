@@ -104,6 +104,24 @@ public final class Database {
     }
 
     /**
+     * Removes the given entity from the database, by the given primary key.
+     * @param classKey the removed object's class
+     * @param key the primary key
+     * @return the removed entity
+     */
+    public DatabaseTrackable removeEntity(
+            final Class<? extends DatabaseTrackable> classKey, final String key) {
+        // Get the database map of the given class
+        LinkedHashMap<String, DatabaseTrackable> entityMap = retrieveClassEntities(classKey);
+        if (entityMap == null) {
+            return null;
+        }
+
+        // Remove the given entity and return it
+        return entityMap.remove(key);
+    }
+
+    /**
      * Clears the entire database.
      */
     public void clear() {
