@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import common.Constants;
 import enums.Category;
 import enums.Cities;
+import enums.ElvesType;
 
 import java.util.List;
 
@@ -31,6 +32,12 @@ public class ChildInput {
 
     @JsonProperty(Constants.GIFTS_PREFERENCES)
     private List<Category> giftsPreferences;
+
+    @JsonProperty(Constants.NICE_SCORE_BONUS)
+    private Double niceScoreBonus;
+
+    @JsonProperty(Constants.ELF)
+    private ElvesType elf;
 
     public ChildInput() { }
 
@@ -88,5 +95,21 @@ public class ChildInput {
 
     public final void setGiftsPreferences(final List<Category> giftsPreferences) {
         this.giftsPreferences = giftsPreferences;
+    }
+
+    public Double getNiceScoreBonus() {
+        return niceScoreBonus;
+    }
+
+    public void setNiceScoreBonus(final Double niceScoreBonus) {
+        this.niceScoreBonus = niceScoreBonus;
+    }
+
+    public ElvesType getElf() {
+        return elf;
+    }
+
+    public void setElf(final ElvesType elf) {
+        this.elf = elf;
     }
 }

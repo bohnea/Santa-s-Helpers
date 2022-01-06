@@ -8,13 +8,10 @@ public final class Constants {
     public static final String FILE_EXTENSION = ".json";
     public static final Integer SMALL_TEST_POINTS = 2;
     public static final Integer BIG_TEST_POINTS = 3;
-    public static final Integer TESTS_NUMBER = 25;
+    public static final Integer TESTS_NUMBER = 19;
     public static final Integer MAXIMUM_ERROR_CHECKSTYLE = 30;
     public static final Integer CHECKSTYLE_POINTS = 10;
     public static final Integer TESTS_NUMBER_SMALL = 15;
-
-    // Command line arguments
-    public static final String ALL_TESTS = "all";
 
     // JSON Names
     public static final String NUMBER_OF_YEARS = "numberOfYears";
@@ -42,6 +39,10 @@ public final class Constants {
     public static final String NICE_SCORE_HISTORY = "niceScoreHistory";
     public static final String ASSIGNED_BUDGET = "assignedBudget";
     public static final String RECEIVED_GIFTS = "receivedGifts";
+    public static final String QUANTITY = "quantity";
+    public static final String NICE_SCORE_BONUS = "niceScoreBonus";
+    public static final String ELF = "elf";
+    public static final String STRATEGY = "strategy";
 
     // Child ages
     public static final int BABY_MAX_AGE = 5;

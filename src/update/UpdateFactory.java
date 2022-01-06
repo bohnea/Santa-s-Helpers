@@ -20,7 +20,8 @@ public class UpdateFactory {
                     annualUpdateInput.getNewChildren().stream()
                             .map(ChildFactory::createChild).toList(),
                     annualUpdateInput.getChildrenUpdates().stream()
-                            .map(ChildUpdateFactory::createChildUpdate).toList()
+                            .map(ChildUpdateFactory::createChildUpdate).toList(),
+                    annualUpdateInput.getStrategy()
             );
         }
     }
@@ -35,7 +36,8 @@ public class UpdateFactory {
             return new ChildUpdate(
                     childUpdateInput.getId(),
                     childUpdateInput.getNiceScore(),
-                    childUpdateInput.getGiftsPreferences()
+                    childUpdateInput.getGiftsPreferences(),
+                    childUpdateInput.getElf()
             );
         }
     }

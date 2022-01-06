@@ -2,6 +2,7 @@ package update;
 
 import child.Child;
 import database.DatabaseTrackable;
+import enums.CityStrategyEnum;
 import gift.Gift;
 
 import java.util.ArrayList;
@@ -17,10 +18,12 @@ public class AnnualUpdate implements DatabaseTrackable {
     private ArrayList<Gift> newGifts;
     private ArrayList<Child> newChildren;
     private ArrayList<ChildUpdate> childrenUpdates;
+    private CityStrategyEnum strategy;
 
     public AnnualUpdate(final Double newSantaBudget, final List<Gift> newGifts,
                         final List<Child> newChildren,
-                        final List<ChildUpdate> childrenUpdates) {
+                        final List<ChildUpdate> childrenUpdates,
+                        final CityStrategyEnum strategy) {
         // Set the instance's ID to the current global ID, then increment the global ID
         id = globalID++;
 
@@ -29,6 +32,7 @@ public class AnnualUpdate implements DatabaseTrackable {
         this.newGifts = new ArrayList<>(newGifts);
         this.newChildren = new ArrayList<>(newChildren);
         this.childrenUpdates = new ArrayList<>(childrenUpdates);
+        this.strategy = strategy;
     }
 
     public final int getId() {
@@ -49,6 +53,10 @@ public class AnnualUpdate implements DatabaseTrackable {
 
     public final ArrayList<ChildUpdate> getChildrenUpdates() {
         return childrenUpdates;
+    }
+
+    public final CityStrategyEnum getStrategy() {
+        return strategy;
     }
 
     /**

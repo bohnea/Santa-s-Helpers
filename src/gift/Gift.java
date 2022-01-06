@@ -7,11 +7,14 @@ public class Gift implements DatabaseTrackable {
     private final String productName;
     private final Double price;
     private final Category category;
+    private final int quantity;
 
-    public Gift(final String productName, final Double price, final Category category) {
+    public Gift(final String productName, final Double price,
+                final Category category, final int quantity) {
         this.productName = productName;
         this.price = price;
         this.category = category;
+        this.quantity = quantity;
     }
 
     public final String getProductName() {
@@ -24,6 +27,10 @@ public class Gift implements DatabaseTrackable {
 
     public final Category getCategory() {
         return category;
+    }
+
+    public int getQuantity() {
+        return quantity;
     }
 
     /**

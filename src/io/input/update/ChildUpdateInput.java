@@ -3,6 +3,7 @@ package io.input.update;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import common.Constants;
 import enums.Category;
+import enums.ElvesType;
 
 import java.util.List;
 
@@ -18,6 +19,9 @@ public class ChildUpdateInput {
 
     @JsonProperty(Constants.GIFTS_PREFERENCES)
     private List<Category> giftsPreferences;
+
+    @JsonProperty(Constants.ELF)
+    private ElvesType elf;
 
     public ChildUpdateInput() { }
 
@@ -43,5 +47,13 @@ public class ChildUpdateInput {
 
     public final void setGiftsPreferences(final List<Category> giftsPreferences) {
         this.giftsPreferences = giftsPreferences;
+    }
+
+    public final ElvesType getElf() {
+        return elf;
+    }
+
+    public final void setElf(final ElvesType elf) {
+        this.elf = elf;
     }
 }
