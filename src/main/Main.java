@@ -14,6 +14,7 @@ import io.output.OutputWriter;
 import update.AnnualUpdate;
 import update.UpdateFactory;
 
+import java.io.File;
 import java.util.List;
 import java.util.stream.IntStream;
 
@@ -27,6 +28,24 @@ public final class Main {
     private Main() { }
 
     /**
+     * Creates a File for the given test index.
+     * @param testIndex the test index
+     * @return a new file used as input
+     */
+    private static File generateInputFileFromTestIndex(final int testIndex) {
+        return new File(Constants.INPUT_PATH + testIndex + Constants.FILE_EXTENSION);
+    }
+
+    /**
+     * Creates a File for the given test index.
+     * @param testIndex the test index
+     * @return a new file used as output
+     */
+    private static File generateOutputFileFromTestIndex(final int testIndex) {
+        return new File(Constants.OUTPUT_PATH + testIndex + Constants.FILE_EXTENSION);
+    }
+
+    /**
      * Parses the input from the given input file index, stores it in the database and creates
      * a new SantaTracker to take care of the rest.
      * @param testIndex the current test index
@@ -34,7 +53,7 @@ public final class Main {
      */
     private static SantaTracker parseAndStoreInput(final int testIndex) {
         // Parse the current file's data
-        Input input = InputReader.readInput(testIndex);
+        Input input = InputReader.readInput(generateInputFileFromTestIndex(testIndex));
 
         // If the input could not be read, return false
         if (input == null) {
@@ -85,7 +104,7 @@ public final class Main {
             Output output = santaTracker.startSimulation();
 
             // Write the results to the corresponding output file
-            OutputWriter.writeOutput(test, output);
+            OutputWriter.writeOutput(generateOutputFileFromTestIndex(test), output);
 
             // Clear the database and go to the next update
             Database.getInstance().clear();
