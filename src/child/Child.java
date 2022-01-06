@@ -24,8 +24,7 @@ public class Child implements DatabaseTrackable {
 
     public Child(final int id, final String lastName, final String firstName, final int age,
                  final Cities city, final List<Double> niceScores,
-                 final List<Category> giftsPreference, final Double niceScoreBonus,
-                 final ElvesType elf) {
+                 final List<Category> giftsPreference, final ElvesType elf) {
         // Set the default values
         this.id = id;
         this.lastName = lastName;
@@ -34,8 +33,10 @@ public class Child implements DatabaseTrackable {
         this.city = city;
         this.niceScores = new ArrayList<>(niceScores);
         this.giftsPreference = new ArrayList<>(giftsPreference);
-        this.niceScoreBonus = niceScoreBonus;
         this.elf = elf;
+
+        // Set the default niceScoreBonus value to 0
+        niceScoreBonus = 0.0d;
 
         // Update current score strategy
         updateScoreStrategy();
@@ -67,6 +68,16 @@ public class Child implements DatabaseTrackable {
 
     public final List<Category> getGiftsPreference() {
         return giftsPreference;
+    }
+
+    /**
+     * NiceScoreBonus setter following the Builder pattern.
+     * @param niceScoreBonus the new niceScoreBonus
+     * @return the same child
+     */
+    public final Child setNiceScoreBonus(final Double niceScoreBonus) {
+        this.niceScoreBonus = niceScoreBonus;
+        return this;
     }
 
     /**
@@ -138,7 +149,7 @@ public class Child implements DatabaseTrackable {
      * @return the child's average score
      */
     public final Double getAverageScore() {
-        return scoreStrategy.getAverageScore(niceScores);
+        return scoreStrategy.getAverageScore(niceScores) + niceScoreBonus;
     }
 
     /**

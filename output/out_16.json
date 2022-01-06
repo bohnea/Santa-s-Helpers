@@ -81,10 +81,6 @@
       "niceScoreHistory" : [ 10.0 ],
       "assignedBudget" : 44.44444444444444,
       "receivedGifts" : [ {
-        "productName" : "Diary of a Wimpy Kid",
-        "price" : 25.0,
-        "category" : "Books"
-      }, {
         "productName" : "Gummy Bears",
         "price" : 10.0,
         "category" : "Sweets"
@@ -104,8 +100,8 @@
         "price" : 5.0,
         "category" : "Toys"
       }, {
-        "productName" : "Gummy Bears",
-        "price" : 10.0,
+        "productName" : "Bag of Candy",
+        "price" : 20.0,
         "category" : "Sweets"
       } ]
     } ]
@@ -124,10 +120,6 @@
         "productName" : "Teddy Bear",
         "price" : 5.0,
         "category" : "Toys"
-      }, {
-        "productName" : "Gummy Bears",
-        "price" : 10.0,
-        "category" : "Sweets"
       } ]
     }, {
       "id" : 1,
@@ -155,9 +147,9 @@
       "niceScoreHistory" : [ 10.0, 3.0 ],
       "assignedBudget" : 26.229508196721312,
       "receivedGifts" : [ {
-        "productName" : "Diary of a Wimpy Kid",
-        "price" : 25.0,
-        "category" : "Books"
+        "productName" : "Bag of Candy",
+        "price" : 20.0,
+        "category" : "Sweets"
       } ]
     }, {
       "id" : 3,
@@ -170,8 +162,8 @@
       "niceScoreHistory" : [ 6.0 ],
       "assignedBudget" : 29.508196721311478,
       "receivedGifts" : [ {
-        "productName" : "Gummy Bears",
-        "price" : 10.0,
+        "productName" : "Bag of Candy",
+        "price" : 20.0,
         "category" : "Sweets"
       }, {
         "productName" : "Teddy Bear",
@@ -194,10 +186,6 @@
         "productName" : "Teddy Bear",
         "price" : 5.0,
         "category" : "Toys"
-      }, {
-        "productName" : "Gummy Bears",
-        "price" : 10.0,
-        "category" : "Sweets"
       } ]
     }, {
       "id" : 1,
@@ -224,11 +212,7 @@
       "averageScore" : 5.166666666666667,
       "niceScoreHistory" : [ 10.0, 3.0, 5.0 ],
       "assignedBudget" : 24.031007751937988,
-      "receivedGifts" : [ {
-        "productName" : "Gummy Bears",
-        "price" : 10.0,
-        "category" : "Sweets"
-      } ]
+      "receivedGifts" : [ ]
     }, {
       "id" : 3,
       "lastName" : "Stoica",
@@ -240,13 +224,9 @@
       "niceScoreHistory" : [ 6.0, 10.0 ],
       "assignedBudget" : 37.2093023255814,
       "receivedGifts" : [ {
-        "productName" : "Gummy Bears",
-        "price" : 10.0,
+        "productName" : "Milk and Cookies",
+        "price" : 30.0,
         "category" : "Sweets"
-      }, {
-        "productName" : "Teddy Bear",
-        "price" : 5.0,
-        "category" : "Toys"
       } ]
     } ]
   }, {
@@ -260,11 +240,7 @@
       "averageScore" : 3.0,
       "niceScoreHistory" : [ 2.0, 0.0, 8.0, 2.0 ],
       "assignedBudget" : 12.658227848101266,
-      "receivedGifts" : [ {
-        "productName" : "Teddy Bear",
-        "price" : 5.0,
-        "category" : "Toys"
-      } ]
+      "receivedGifts" : [ ]
     }, {
       "id" : 1,
       "lastName" : "Mihalache",
@@ -276,8 +252,8 @@
       "niceScoreHistory" : [ 3.0, 8.0, 6.0, 3.0, 10.0 ],
       "assignedBudget" : 25.31645569620253,
       "receivedGifts" : [ {
-        "productName" : "Teddy Bear",
-        "price" : 5.0,
+        "productName" : "Castle",
+        "price" : 15.0,
         "category" : "Toys"
       } ]
     }, {
@@ -290,11 +266,7 @@
       "averageScore" : 6.7,
       "niceScoreHistory" : [ 10.0, 3.0, 5.0, 9.0 ],
       "assignedBudget" : 28.270042194092827,
-      "receivedGifts" : [ {
-        "productName" : "Diary of a Wimpy Kid",
-        "price" : 25.0,
-        "category" : "Books"
-      } ]
+      "receivedGifts" : [ ]
     }, {
       "id" : 3,
       "lastName" : "Stoica",
@@ -306,13 +278,9 @@
       "niceScoreHistory" : [ 6.0, 10.0, 8.0 ],
       "assignedBudget" : 33.755274261603375,
       "receivedGifts" : [ {
-        "productName" : "Gummy Bears",
-        "price" : 10.0,
+        "productName" : "Milk and Cookies",
+        "price" : 30.0,
         "category" : "Sweets"
-      }, {
-        "productName" : "Teddy Bear",
-        "price" : 5.0,
-        "category" : "Toys"
       } ]
     } ]
   } ]
