@@ -17,6 +17,9 @@ public class GiftInput {
     @JsonProperty(Constants.CATEGORY)
     private Category category;
 
+    @JsonProperty(Constants.QUANTITY)
+    private Integer quantity;
+
     public GiftInput() { }
 
     public final String getProductName() {
@@ -41,5 +44,13 @@ public class GiftInput {
 
     public final void setCategory(final Category category) {
         this.category = category;
+    }
+
+    public final Integer getQuantity() {
+        return quantity;
+    }
+
+    public final void setQuantity(final Integer quantity) {
+        this.quantity = quantity;
     }
 }

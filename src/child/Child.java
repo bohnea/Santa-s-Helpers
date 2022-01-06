@@ -5,6 +5,7 @@ import child.scorestrategy.ScoreStrategyFactory;
 import database.DatabaseTrackable;
 import enums.Category;
 import enums.Cities;
+import enums.ElvesType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,10 +19,13 @@ public class Child implements DatabaseTrackable {
     private List<Double> niceScores;
     private List<Category> giftsPreference;
     private ScoreStrategy scoreStrategy;
+    private Double niceScoreBonus;
+    private ElvesType elf;
 
     public Child(final int id, final String lastName, final String firstName, final int age,
                  final Cities city, final List<Double> niceScores,
-                 final List<Category> giftsPreference) {
+                 final List<Category> giftsPreference, final Double niceScoreBonus,
+                 final ElvesType elf) {
         // Set the default values
         this.id = id;
         this.lastName = lastName;
@@ -30,6 +34,8 @@ public class Child implements DatabaseTrackable {
         this.city = city;
         this.niceScores = new ArrayList<>(niceScores);
         this.giftsPreference = new ArrayList<>(giftsPreference);
+        this.niceScoreBonus = niceScoreBonus;
+        this.elf = elf;
 
         // Update current score strategy
         updateScoreStrategy();

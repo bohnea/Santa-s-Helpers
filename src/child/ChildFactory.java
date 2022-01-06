@@ -23,7 +23,9 @@ public final class ChildFactory {
                 childInput.getAge(),
                 childInput.getCity(),
                 List.of(childInput.getNiceScore()),
-                childInput.getGiftsPreferences()
+                childInput.getGiftsPreferences(),
+                childInput.getNiceScoreBonus(),
+                childInput.getElf()
         );
     }
 }

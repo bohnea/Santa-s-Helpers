@@ -2,6 +2,7 @@ package io.input.update;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import common.Constants;
+import enums.CityStrategyEnum;
 import io.input.gift.GiftInput;
 import io.input.child.ChildInput;
 
@@ -22,6 +23,9 @@ public class AnnualUpdateInput {
 
     @JsonProperty(Constants.CHILDREN_UPDATES)
     private List<ChildUpdateInput> childrenUpdates;
+
+    @JsonProperty(Constants.STRATEGY)
+    private CityStrategyEnum strategy;
 
     public AnnualUpdateInput() { }
 
@@ -55,5 +59,13 @@ public class AnnualUpdateInput {
 
     public final void setChildrenUpdates(final List<ChildUpdateInput> childrenUpdates) {
         this.childrenUpdates = childrenUpdates;
+    }
+
+    public final CityStrategyEnum getStrategy() {
+        return strategy;
+    }
+
+    public final void setStrategy(final CityStrategyEnum strategy) {
+        this.strategy = strategy;
     }
 }
