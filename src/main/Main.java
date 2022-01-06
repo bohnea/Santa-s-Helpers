@@ -21,15 +21,24 @@ import java.util.stream.IntStream;
  * Class used to run the code
  */
 public final class Main {
+    /**
+     * Hidden constructor.
+     */
     private Main() { }
 
-    private static boolean parseAndStoreInput(int testIndex) {
+    /**
+     * Parses the input from the given input file index, stores it in the database and creates
+     * a new SantaTracker to take care of the rest.
+     * @param testIndex the current test index
+     * @return a new SantaTracker to take care of the yearly simulation
+     */
+    private static SantaTracker parseAndStoreInput(final int testIndex) {
         // Parse the current file's data
         Input input = InputReader.readInput(testIndex);
 
         // If the input could not be read, return false
         if (input == null) {
-             return false;
+             return null;
         }
 
         // Store the rest of the information in the database
@@ -51,41 +60,29 @@ public final class Main {
         Database.getInstance().add(gifts);
         Database.getInstance().add(annualUpdates);
 
-        // Initialize Santa Tracker
-        SantaTracker.getInstance().initialize(
-                input.getNumberOfYears(),
-                input.getSantaBudget()
-        );
-
-        // The input has been read and stored
-        return true;
+        // Return an initialized SantaTracker
+        return new SantaTracker(input.getNumberOfYears(), input.getSantaBudget());
     }
 
     /**
-     * This method is used to call the checker which calculates the score
+     * This method is used to call the checker which calculates the score. It's also used
+     * to read the input and write the output for each test.
      * @param args the arguments used to call the main method
      */
     public static void main(final String[] args) {
-        // Test the first argument and check whether to run all tests or not
-        boolean runCustomTests = args.length >= 1 && args[0].compareTo(Constants.ALL_TESTS) == 0;
-
-        // Create custom test sets
-        List<Integer> allTests = IntStream.range(1, Constants.TESTS_NUMBER + 1).boxed().toList();
-        List<Integer> customTests = List.of(14);
-
         // Go through each test
-        for (int test: runCustomTests ? allTests : customTests) {
-            // Parse input and store in database
-            boolean parsingWasSuccessful = parseAndStoreInput(test);
+        for (int test: IntStream.range(1, Constants.TESTS_NUMBER + 1).boxed().toList()) {
+            // Parse input, store it in database and create a new SantaTracker
+            SantaTracker santaTracker = parseAndStoreInput(test);
 
             // If the input could not be read, skip to the next test
-            if (!parsingWasSuccessful) {
+            if (santaTracker == null) {
                 Database.getInstance().clear();
                 continue;
             }
 
             // Start the yearly simulation and get the results
-            Output output = SantaTracker.getInstance().startSimulation();
+            Output output = santaTracker.startSimulation();
 
             // Write the results to the corresponding output file
             OutputWriter.writeOutput(test, output);

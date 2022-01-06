@@ -4,32 +4,89 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import common.Constants;
 import enums.Category;
 import enums.Cities;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.util.List;
 
+/**
+ * Class created for JSON parsing.
+ */
 public class ChildInput {
     @JsonProperty(Constants.ID)
-    private @Getter @Setter Integer id;
+    private Integer id;
 
     @JsonProperty(Constants.LAST_NAME)
-    private @Getter @Setter String lastName;
+    private String lastName;
 
     @JsonProperty(Constants.FIRST_NAME)
-    private @Getter @Setter String firstName;
+    private String firstName;
 
     @JsonProperty(Constants.AGE)
-    private @Getter @Setter Integer age;
+    private Integer age;
 
     @JsonProperty(Constants.CITY)
-    private @Getter @Setter Cities city;
+    private Cities city;
 
     @JsonProperty(Constants.NICE_SCORE)
-    private @Getter @Setter Double niceScore;
+    private Double niceScore;
 
     @JsonProperty(Constants.GIFTS_PREFERENCES)
-    private @Getter @Setter List<Category> giftsPreferences;
+    private List<Category> giftsPreferences;
 
     public ChildInput() { }
+
+    public final Integer getId() {
+        return id;
+    }
+
+    public final void setId(final Integer id) {
+        this.id = id;
+    }
+
+    public final String getLastName() {
+        return lastName;
+    }
+
+    public final void setLastName(final String lastName) {
+        this.lastName = lastName;
+    }
+
+    public final String getFirstName() {
+        return firstName;
+    }
+
+    public final void setFirstName(final String firstName) {
+        this.firstName = firstName;
+    }
+
+    public final Integer getAge() {
+        return age;
+    }
+
+    public final void setAge(final Integer age) {
+        this.age = age;
+    }
+
+    public final Cities getCity() {
+        return city;
+    }
+
+    public final void setCity(final Cities city) {
+        this.city = city;
+    }
+
+    public final Double getNiceScore() {
+        return niceScore;
+    }
+
+    public final void setNiceScore(final Double niceScore) {
+        this.niceScore = niceScore;
+    }
+
+    public final List<Category> getGiftsPreferences() {
+        return giftsPreferences;
+    }
+
+    public final void setGiftsPreferences(final List<Category> giftsPreferences) {
+        this.giftsPreferences = giftsPreferences;
+    }
 }

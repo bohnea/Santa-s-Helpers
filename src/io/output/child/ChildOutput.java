@@ -5,44 +5,43 @@ import common.Constants;
 import enums.Category;
 import enums.Cities;
 import io.output.gift.GiftOutput;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Class created for JSON parsing.
+ */
 public class ChildOutput {
     @JsonProperty(Constants.ID)
-    private @Getter @Setter Integer id;
+    private Integer id;
 
     @JsonProperty(Constants.LAST_NAME)
-    private @Getter @Setter String lastName;
+    private String lastName;
 
     @JsonProperty(Constants.FIRST_NAME)
-    private @Getter @Setter String firstName;
+    private String firstName;
 
     @JsonProperty(Constants.CITY)
-    private @Getter @Setter Cities city;
+    private Cities city;
 
     @JsonProperty(Constants.AGE)
-    private @Getter @Setter Integer age;
+    private Integer age;
 
     @JsonProperty(Constants.GIFTS_PREFERENCES)
-    private @Getter @Setter List<Category> giftsPreferences;
+    private List<Category> giftsPreferences;
 
     @JsonProperty(Constants.AVERAGE_SCORE)
-    private @Getter @Setter Double averageScore;
+    private Double averageScore;
 
     @JsonProperty(Constants.NICE_SCORE_HISTORY)
-    private @Getter @Setter List<Double> niceScoreHistory;
+    private List<Double> niceScoreHistory;
 
     @JsonProperty(Constants.ASSIGNED_BUDGET)
-    private @Getter @Setter Double assignedBudget;
+    private Double assignedBudget;
 
     @JsonProperty(Constants.RECEIVED_GIFTS)
-    private @Getter @Setter List<GiftOutput> receivedGifts;
-
-    public ChildOutput() { }
+    private List<GiftOutput> receivedGifts;
 
     public ChildOutput(final Integer id, final String lastName, final String firstName,
                        final Cities city, final Integer age, final List<Category> giftsPreferences,
@@ -58,5 +57,85 @@ public class ChildOutput {
         this.niceScoreHistory = new ArrayList<>(niceScoreHistory);
         this.assignedBudget = assignedBudget;
         this.receivedGifts = new ArrayList<>(receivedGifts);
+    }
+
+    public final Integer getId() {
+        return id;
+    }
+
+    public final void setId(final Integer id) {
+        this.id = id;
+    }
+
+    public final String getLastName() {
+        return lastName;
+    }
+
+    public final void setLastName(final String lastName) {
+        this.lastName = lastName;
+    }
+
+    public final String getFirstName() {
+        return firstName;
+    }
+
+    public final void setFirstName(final String firstName) {
+        this.firstName = firstName;
+    }
+
+    public final Cities getCity() {
+        return city;
+    }
+
+    public final void setCity(final Cities city) {
+        this.city = city;
+    }
+
+    public final Integer getAge() {
+        return age;
+    }
+
+    public final void setAge(final Integer age) {
+        this.age = age;
+    }
+
+    public final List<Category> getGiftsPreferences() {
+        return giftsPreferences;
+    }
+
+    public final void setGiftsPreferences(final List<Category> giftsPreferences) {
+        this.giftsPreferences = giftsPreferences;
+    }
+
+    public final Double getAverageScore() {
+        return averageScore;
+    }
+
+    public final void setAverageScore(final Double averageScore) {
+        this.averageScore = averageScore;
+    }
+
+    public final List<Double> getNiceScoreHistory() {
+        return niceScoreHistory;
+    }
+
+    public final void setNiceScoreHistory(final List<Double> niceScoreHistory) {
+        this.niceScoreHistory = niceScoreHistory;
+    }
+
+    public final Double getAssignedBudget() {
+        return assignedBudget;
+    }
+
+    public final void setAssignedBudget(final Double assignedBudget) {
+        this.assignedBudget = assignedBudget;
+    }
+
+    public final List<GiftOutput> getReceivedGifts() {
+        return receivedGifts;
+    }
+
+    public final void setReceivedGifts(final List<GiftOutput> receivedGifts) {
+        this.receivedGifts = receivedGifts;
     }
 }

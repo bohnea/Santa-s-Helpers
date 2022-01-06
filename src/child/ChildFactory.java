@@ -4,8 +4,18 @@ import io.input.child.ChildInput;
 
 import java.util.List;
 
-public class ChildFactory {
-    public static Child createChild(ChildInput childInput) {
+public final class ChildFactory {
+    /**
+     * Hidden constructor.
+     */
+    private ChildFactory() { }
+
+    /**
+     * Creates a new Child based on the given ChildInput.
+     * @param childInput the child input to turn into a child
+     * @return the created child
+     */
+    public static Child createChild(final ChildInput childInput) {
         return new Child(
                 childInput.getId(),
                 childInput.getLastName(),
