@@ -118,6 +118,9 @@ public final class SantaTracker {
             // Offer the gift to the child
             currentSum += giftToOffer.getPrice();
             receivedGifts.add(giftToOffer);
+
+            // Reduce the gift's quantity
+            giftToOffer.reduceQuantity();
         }
 
         // Return the list of received gifts

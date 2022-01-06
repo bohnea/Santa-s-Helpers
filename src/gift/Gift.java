@@ -7,7 +7,7 @@ public class Gift implements DatabaseTrackable {
     private final String productName;
     private final Double price;
     private final Category category;
-    private final int quantity;
+    private int quantity;
 
     public Gift(final String productName, final Double price,
                 final Category category, final int quantity) {
@@ -31,6 +31,13 @@ public class Gift implements DatabaseTrackable {
 
     public int getQuantity() {
         return quantity;
+    }
+
+    /**
+     * Reduces the quantity of the gift by 1.
+     */
+    public final void reduceQuantity() {
+        --quantity;
     }
 
     /**

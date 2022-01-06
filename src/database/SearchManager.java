@@ -53,6 +53,8 @@ public final class SearchManager {
         return getGiftsFromDatabase().stream()
                 // Get the gifts of the given category
                 .filter(gift -> gift.getCategory() == category)
+                // Remove the gifts with 0 quantity
+                .filter(gift -> gift.getQuantity() > 0)
                 // Get the cheapest gift
                 .min(Comparator.comparingDouble(Gift::getPrice))
                 // Otherwise, return null
