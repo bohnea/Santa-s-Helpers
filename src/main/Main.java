@@ -72,7 +72,8 @@ public final class Main {
                 .toList();
 
         List<AnnualUpdate> annualUpdates = input.getAnnualUpdates().stream()
-                .map(UpdateFactory.AnnualUpdateFactory::createAnnualUpdate).toList();
+                .map(UpdateFactory.AnnualUpdateFactory::createAnnualUpdate)
+                .toList();
 
         // Store them in the database
         Database.getInstance().add(children);

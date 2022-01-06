@@ -16,12 +16,26 @@ All main components of the project will be presented in the following sections, 
 on the **interactions** between classes and the **general flow** of the program.
 
 
-## The Gift Distribution Algorithm
+## The Simulation Process
 ### Initialization / Round 0
-
+At the beginning of the simulation, all the information is stored in the database, and the
+SantaTracker is created and initialized with the simulation year count and the initial budget.
+Then, the initial gifts are distributed to the initial children. The gift distribution algorithm
+will be detailed at the end of the simulation section.
 
 ### Yearly Updates
+Every year there are multiple steps:
+* the children are notified of the year change, incrementing their age by 1
+* new children and gifts are added to the database
+* all children updates are applied to the children
+* Santa's budget is updated
+* the newly obtained gift collection is distributed among the children
 
+### The Gift Distribution Algorithm
+The steps are:
+* each child is assigned a maximum budget that Santa cannot go over
+* Santa attempts to buy at most one gift from each child's preferred gift categories, from left
+  to right
 
 ## The Database
 The database is a very important part of this project, as it holds the information of all the
@@ -88,19 +102,37 @@ Those classes are:
 
 
 ## Annual Updates
+Annual updates represent the changes that take place each year, changes that add new entities and
+affect old ones. Each annual update contains a list of new children and gifts to be added to the
+database, alongside a new yearly budget and, very importantly, a list of child updates.
 
+Both annual updates and child updates are created with the use of an UpdateFactory that takes in
+an input object and turns it into the desired AnnualUpdate / ChildUpdate class.
+
+The annual updates are applied within the SantaTracker class, whereas the child updates are applied
+with the help of the ChildManager class.
+
+### Child Updates
+Child updates contain 3 fields:
+* ID - the id of the child on which the update should be applied
+* niceScore - a new nice score to add to the child
+* giftsPreferences - a list of new gift categories to add to the child
 
 
 ## Input / Output
 ### Input
-All input test files can be found in the test_db/test_files folder. A test is a JSON file with information about all
-the users, videos, actors and actions in the database. The data is parsed and saved in an Input object, after which
-each individual component is created and added to the database.
+All input test files can be found in the _tests/_ folder. A test is a JSON file with information
+about all the initial information, children, gifts and yearly updates that will be added to the
+database. The data is parsed with the help of the Jackson library -- this was done by creating an
+Input class for each object in the JSON file, and marking each field with a ```@JsonProperty```
+annotation. All the data was stored in a single Input class.
 
-For the creation of the Action objects, there is a specialized class called ActionFactory, which takes in the input of
-a single Action and creates either a Command, a Query or a Recommendation, based on the requested type.
+The input data was then stored in the corresponding non-input classes with the help of many
+Factory classes.
 
 ### Output
-Each action creates a certain output message containing either the result of the query / recommendation or if the
-command was successful. The output is formatted as a JSON object and added to an array of JSON objects, which is then
-printed into a file in the result/ folder (or to out.txt, if calling ```main()``` from the Test class).
+Every gift distribution event generates output that needs to be written to a file. It's first
+added to a list in a general Output object, that is further written to the corresponding output
+test file, with the help of Jackson.
+
+The different (NameOfObject)Output objects are created using Factory classes.
