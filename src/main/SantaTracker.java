@@ -2,6 +2,7 @@ package main;
 
 import child.Child;
 import child.ChildManager;
+import common.Constants;
 import database.Database;
 import database.SearchManager;
 import enums.Category;
@@ -17,38 +18,22 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class SantaTracker {
-    /**
-     * The Singleton instance.
-     */
-    private static SantaTracker instance = null;
+public final class SantaTracker {
+    private final int numberOfYears;
+    private Double santaBudget;
+    private final Map<Integer, Double> childrenBudgets;
 
-    private SantaTracker() {
+    public SantaTracker(final int numberOfYears, final Double santaBudget) {
+        this.numberOfYears = numberOfYears;
+        this.santaBudget = santaBudget;
         childrenBudgets = new HashMap<>();
     }
 
     /**
-     * Gets the instance of the SantaTracker Singleton, if it exists, or creates a new one.
-     * @return the Singleton instance
+     * Adds the average scores of all the given children, strictly in order, from left to right.
+     * @param children the list of children
+     * @return the sum of the children's average scores
      */
-    public static SantaTracker getInstance() {
-        if (instance == null) {
-            instance = new SantaTracker();
-        }
-
-        return instance;
-    }
-
-    private int numberOfYears;
-    private Double santaBudget;
-    private final Map<Integer, Double> childrenBudgets;
-
-    public void initialize(final int numberOfYears, final Double santaBudget) {
-        // Set the initial data
-        this.numberOfYears = numberOfYears;
-        this.santaBudget = santaBudget;
-    }
-
     private Double getSumOfAverageScores(final List<Child> children) {
         // Declare the sum
         Double sum = 0.0d;
@@ -62,12 +47,15 @@ public class SantaTracker {
         return sum;
     }
 
+    /**
+     * Removes all young adults from the database.
+     */
     private void removeYoungAdults() {
         // Get the children from the database
         List<Child> children = new ArrayList<>(SearchManager.getChildrenFromDatabase());
 
         // Go through each child and keep the young adults
-        children.removeIf(child -> child.getAge() <= 18);
+        children.removeIf(child -> child.getAge() <= Constants.TEEN_MAX_AGE);
 
         // For each young adult, look them up in the database and remove them
         children.forEach(
@@ -75,6 +63,10 @@ public class SantaTracker {
         );
     }
 
+    /**
+     * Goes through all the children in the database and calculates their allocated budgets,
+     * storing the results in the childrenBudgets map.
+     */
     private void updateChildrenBudgets() {
         // Get the children from the database
         List<Child> children = SearchManager.getChildrenFromDatabase();
@@ -100,12 +92,18 @@ public class SantaTracker {
         SearchManager.getChildrenFromDatabase().forEach(Child::update);
     }
 
+    /**
+     * Offers the gifts to the given child.
+     * @param child the child to receive the gifts
+     * @param allocatedBudget the maximum budget of the gifts
+     * @return a list of received gifts
+     */
     private List<Gift> offerGiftsToChild(final Child child, final Double allocatedBudget) {
         // Create a list of all the received gifts
         List<Gift> receivedGifts = new ArrayList<>();
 
         // Keep track of the current sum
-        Double currentSum = 0.0d;
+        double currentSum = 0.0d;
 
         // Go through the child's preferred categories
         for (Category category: child.getGiftsPreference()) {
@@ -122,9 +120,14 @@ public class SantaTracker {
             receivedGifts.add(giftToOffer);
         }
 
+        // Return the list of received gifts
         return receivedGifts;
     }
 
+    /**
+     * Starts the gift offering process.
+     * @return the current year's output
+     */
     private AnnualOutput offerGiftsToAll() {
         // Remove children over 18 years old
         removeYoungAdults();
@@ -153,7 +156,13 @@ public class SantaTracker {
         return new AnnualOutput(childOutput);
     }
 
-    private AnnualOutput advanceYear(AnnualUpdate annualUpdate) {
+    /**
+     * Simulates a new yearly round. Notifies children of the year change, updates the
+     * information with the new values and offers gifts to the children.
+     * @param annualUpdate the annual update to be executed
+     * @return the results of the current year, as an AnnualOutput object
+     */
+    private AnnualOutput advanceYear(final AnnualUpdate annualUpdate) {
         // Notify all children of the year change
         notifyChildren();
 
@@ -176,6 +185,11 @@ public class SantaTracker {
         return offerGiftsToAll();
     }
 
+    /**
+     * Starts the Christmas simulation. Performs round 0 initialization and executes
+     * every annual update, in order of apparition in the database.
+     * @return the final results of the entire simulation, as an Output object
+     */
     public Output startSimulation() {
         // Create a list of annual outputs
         List<AnnualOutput> annualOutputs = new ArrayList<>();

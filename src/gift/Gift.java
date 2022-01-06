@@ -2,12 +2,11 @@ package gift;
 
 import database.DatabaseTrackable;
 import enums.Category;
-import lombok.Getter;
 
 public class Gift implements DatabaseTrackable {
-    private final @Getter String productName;
-    private final @Getter Double price;
-    private final @Getter Category category;
+    private final String productName;
+    private final Double price;
+    private final Category category;
 
     public Gift(final String productName, final Double price, final Category category) {
         this.productName = productName;
@@ -15,8 +14,24 @@ public class Gift implements DatabaseTrackable {
         this.category = category;
     }
 
+    public final String getProductName() {
+        return productName;
+    }
+
+    public final Double getPrice() {
+        return price;
+    }
+
+    public final Category getCategory() {
+        return category;
+    }
+
+    /**
+     * Gets the primary key, for use with the database.
+     * @return the primary key
+     */
     @Override
-    public String getKey() {
+    public final String getKey() {
         return productName + price;
     }
 }

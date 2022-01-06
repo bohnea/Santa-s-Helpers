@@ -3,18 +3,43 @@ package io.input.gift;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import common.Constants;
 import enums.Category;
-import lombok.Getter;
-import lombok.Setter;
 
+/**
+ * Class created for JSON parsing.
+ */
 public class GiftInput {
     @JsonProperty(Constants.PRODUCT_NAME)
-    private @Getter @Setter String productName;
+    private String productName;
 
     @JsonProperty(Constants.PRICE)
-    private @Getter @Setter Double price;
+    private Double price;
 
     @JsonProperty(Constants.CATEGORY)
-    private @Getter @Setter Category category;
+    private Category category;
 
     public GiftInput() { }
+
+    public final String getProductName() {
+        return productName;
+    }
+
+    public final void setProductName(final String productName) {
+        this.productName = productName;
+    }
+
+    public final Double getPrice() {
+        return price;
+    }
+
+    public final void setPrice(final Double price) {
+        this.price = price;
+    }
+
+    public final Category getCategory() {
+        return category;
+    }
+
+    public final void setCategory(final Category category) {
+        this.category = category;
+    }
 }

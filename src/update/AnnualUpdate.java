@@ -3,34 +3,60 @@ package update;
 import child.Child;
 import database.DatabaseTrackable;
 import gift.Gift;
-import lombok.Getter;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class AnnualUpdate implements DatabaseTrackable {
-    /* Is incremented with each new AnnualUpdate. */
+    /* Global ID incremented with each new AnnualUpdate. */
     private static int globalID = 0;
 
-    /* Global ID used as primary key for the database. */
+    /* Individual ID used as primary key for the database. */
     private final int id;
-    private @Getter Double newSantaBudget;
-    private @Getter ArrayList<Gift> newGifts;
-    private @Getter ArrayList<Child> newChildren;
-    private @Getter ArrayList<ChildUpdate> childrenUpdates;
+    private Double newSantaBudget;
+    private ArrayList<Gift> newGifts;
+    private ArrayList<Child> newChildren;
+    private ArrayList<ChildUpdate> childrenUpdates;
 
     public AnnualUpdate(final Double newSantaBudget, final List<Gift> newGifts,
                         final List<Child> newChildren,
                         final List<ChildUpdate> childrenUpdates) {
+        // Set the instance's ID to the current global ID, then increment the global ID
         id = globalID++;
+
+        // Set the default values
         this.newSantaBudget = newSantaBudget;
         this.newGifts = new ArrayList<>(newGifts);
         this.newChildren = new ArrayList<>(newChildren);
         this.childrenUpdates = new ArrayList<>(childrenUpdates);
     }
 
+    public final int getId() {
+        return id;
+    }
+
+    public final Double getNewSantaBudget() {
+        return newSantaBudget;
+    }
+
+    public final ArrayList<Gift> getNewGifts() {
+        return newGifts;
+    }
+
+    public final ArrayList<Child> getNewChildren() {
+        return newChildren;
+    }
+
+    public final ArrayList<ChildUpdate> getChildrenUpdates() {
+        return childrenUpdates;
+    }
+
+    /**
+     * Gets the primary key, for use with the database.
+     * @return the primary key
+     */
     @Override
-    public String getKey() {
+    public final String getKey() {
         return String.valueOf(id);
     }
 }

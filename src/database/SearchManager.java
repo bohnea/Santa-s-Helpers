@@ -9,6 +9,15 @@ import java.util.Comparator;
 import java.util.List;
 
 public final class SearchManager {
+    /**
+     * Hidden constructor.
+     */
+    private SearchManager() { }
+
+    /**
+     * Retrieves all children from the database.
+     * @return the retrieved children
+     */
     public static List<Child> getChildrenFromDatabase() {
         // Get the children from the database
         return Database.getInstance()
@@ -19,6 +28,10 @@ public final class SearchManager {
                 .toList();
     }
 
+    /**
+     * Retrieves all gifts from the database.
+     * @return the retrieved gifts
+     */
     public static List<Gift> getGiftsFromDatabase() {
         // Get the gifts from the database
         return Database.getInstance()
@@ -29,6 +42,12 @@ public final class SearchManager {
                 .toList();
     }
 
+    /**
+     * Looks through all gifts of the given category in the database, and retrieves the one
+     * with the lowest price, or null if the retrieved list is empty.
+     * @param category
+     * @return
+     */
     public static Gift getCheapestGiftOfCategory(final Category category) {
         // Get all the gifts from the database
         return getGiftsFromDatabase().stream()
@@ -40,6 +59,10 @@ public final class SearchManager {
                 .orElse(null);
     }
 
+    /**
+     * Retrieves all annual updates from the database.
+     * @return the retrieved annual updates
+     */
     public static List<AnnualUpdate> getAnnualUpdatesFromDatabase() {
         // Get the annual updates from the database
         return Database.getInstance()
