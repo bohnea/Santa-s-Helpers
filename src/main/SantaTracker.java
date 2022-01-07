@@ -4,19 +4,19 @@ import child.Child;
 import child.ChildManager;
 import common.Constants;
 import database.Database;
-import database.SearchManager;
+import database.managers.search.SearchManager;
 import enums.Category;
+import enums.CityStrategyEnum;
 import gift.Gift;
 import io.output.AnnualOutput;
 import io.output.Output;
 import io.output.child.ChildOutput;
 import io.output.child.ChildOutputFactory;
 import update.AnnualUpdate;
+import update.assignmentstrategy.AssignmentStrategy;
+import update.assignmentstrategy.AssignmentStrategyFactory;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public final class SantaTracker {
     private final int numberOfYears;
@@ -36,7 +36,7 @@ public final class SantaTracker {
      */
     private Double getSumOfAverageScores(final List<Child> children) {
         // Declare the sum
-        Double sum = 0.0d;
+        double sum = 0.0d;
 
         // Iterate through the entire list
         for (Child child : children) {
@@ -129,9 +129,10 @@ public final class SantaTracker {
 
     /**
      * Starts the gift offering process.
+     * @param assignmentStrategy the order in which to assign gifts to children
      * @return the current year's output
      */
-    private AnnualOutput offerGiftsToAll() {
+    private AnnualOutput offerGiftsToAll(AssignmentStrategy assignmentStrategy) {
         // Remove children over 18 years old
         removeYoungAdults();
 
@@ -141,8 +142,8 @@ public final class SantaTracker {
         // Create a list of all the children who will receive presents
         List<ChildOutput> childOutput = new ArrayList<>();
 
-        // Go through each child and offer him the gifts
-        for (Child child: SearchManager.getChildrenFromDatabase()) {
+        // Go through each child, in the specified order, and offer him the gifts
+        for (Child child: assignmentStrategy.getChildOrder()) {
             // Get the child's received gifts
             List<Gift> receivedGifts =
                     offerGiftsToChild(child, childrenBudgets.get(child.getId()));
@@ -154,6 +155,9 @@ public final class SantaTracker {
                     receivedGifts
             ));
         }
+
+        // Sort the ChildOutput list by ID
+        childOutput.sort(Comparator.comparingInt(ChildOutput::getId));
 
         // Return the current year's output
         return new AnnualOutput(childOutput);
@@ -184,8 +188,9 @@ public final class SantaTracker {
         // Set the new budget
         santaBudget = annualUpdate.getNewSantaBudget();
 
-        // Offer the gifts to the children and return the output
-        return offerGiftsToAll();
+        // Offer the gifts to the children, in the order specified in the
+        // annual update, and return the output
+        return offerGiftsToAll(annualUpdate.getStrategy());
     }
 
     /**
@@ -197,8 +202,10 @@ public final class SantaTracker {
         // Create a list of annual outputs
         List<AnnualOutput> annualOutputs = new ArrayList<>();
 
-        // Offer initial gifts and add the results to the list
-        annualOutputs.add(offerGiftsToAll());
+        // Offer initial gifts, in order of child IDs, and add the results to the list
+        annualOutputs.add(offerGiftsToAll(
+                AssignmentStrategyFactory.createGiftStrategy(CityStrategyEnum.ID)
+        ));
 
         // Get all annual updates
         SearchManager.getAnnualUpdatesFromDatabase()

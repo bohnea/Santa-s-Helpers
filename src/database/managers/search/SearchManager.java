@@ -1,7 +1,9 @@
-package database;
+package database.managers.search;
 
 import child.Child;
+import database.Database;
 import enums.Category;
+import enums.Cities;
 import gift.Gift;
 import update.AnnualUpdate;
 
@@ -25,6 +27,19 @@ public final class SearchManager {
                 .values().stream()
                 // Cast them to the appropriate type
                 .map(databaseTrackable -> (Child) databaseTrackable)
+                .toList();
+    }
+
+    /**
+     * Retrieves all children, stored in the database, from the given city.
+     * @param city the city to search for
+     * @return the retrieved children
+     */
+    public static List<Child> getChildrenByCity(final Cities city) {
+        // Get all the children from the database
+        return getChildrenFromDatabase().stream()
+                // Get the children from the given city
+                .filter(child -> child.getCity() == city)
                 .toList();
     }
 
