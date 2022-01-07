@@ -149,7 +149,7 @@ public class Child implements DatabaseTrackable {
      * @return the child's average score
      */
     public final Double getAverageScore() {
-        return scoreStrategy.getAverageScore(niceScores) + niceScoreBonus;
+        return scoreStrategy.getAverageScore(niceScores) * (1.0d + niceScoreBonus / 100.0d);
     }
 
     /**

@@ -7,7 +7,7 @@
       "city" : "Brasov",
       "age" : 18,
       "giftsPreferences" : [ "Sweets", "Board Games", "Books", "Technology", "Toys" ],
-      "averageScore" : 5.2,
+      "averageScore" : 10.0,
       "niceScoreHistory" : [ 4.0 ],
       "assignedBudget" : 934.0,
       "receivedGifts" : [ {
@@ -44,7 +44,7 @@
       "city" : "Cluj-Napoca",
       "age" : 2,
       "giftsPreferences" : [ "Sweets", "Clothes", "Technology" ],
-      "averageScore" : 18.0,
+      "averageScore" : 10.0,
       "niceScoreHistory" : [ 4.0 ],
       "assignedBudget" : 934.0,
       "receivedGifts" : [ {
