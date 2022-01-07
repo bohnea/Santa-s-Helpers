@@ -65,6 +65,15 @@ The actions that can be done on the database are the following:
 * clear
   * clears the entire database
 
+### Search Manager
+
+```TO_COMPLETE```
+
+
+### Sort Manager
+
+```TO_COMPLETE```
+
 ## Main Entities
 The main entities of this project are considered to be the ones that are stored in the database,
 the classes that implement the DatabaseTrackable interface.

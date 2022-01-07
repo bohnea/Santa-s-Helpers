@@ -4,6 +4,7 @@ import child.ChildFactory;
 import gift.GiftFactory;
 import io.input.update.AnnualUpdateInput;
 import io.input.update.ChildUpdateInput;
+import update.assignmentstrategy.AssignmentStrategyFactory;
 
 public class UpdateFactory {
     public static class AnnualUpdateFactory {
@@ -21,7 +22,7 @@ public class UpdateFactory {
                             .map(ChildFactory::createChild).toList(),
                     annualUpdateInput.getChildrenUpdates().stream()
                             .map(ChildUpdateFactory::createChildUpdate).toList(),
-                    annualUpdateInput.getStrategy()
+                    AssignmentStrategyFactory.createGiftStrategy(annualUpdateInput.getStrategy())
             );
         }
     }

@@ -4,6 +4,7 @@ import child.Child;
 import database.DatabaseTrackable;
 import enums.CityStrategyEnum;
 import gift.Gift;
+import update.assignmentstrategy.AssignmentStrategy;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,12 +19,12 @@ public class AnnualUpdate implements DatabaseTrackable {
     private ArrayList<Gift> newGifts;
     private ArrayList<Child> newChildren;
     private ArrayList<ChildUpdate> childrenUpdates;
-    private CityStrategyEnum strategy;
+    private AssignmentStrategy strategy;
 
     public AnnualUpdate(final Double newSantaBudget, final List<Gift> newGifts,
                         final List<Child> newChildren,
                         final List<ChildUpdate> childrenUpdates,
-                        final CityStrategyEnum strategy) {
+                        final AssignmentStrategy strategy) {
         // Set the instance's ID to the current global ID, then increment the global ID
         id = globalID++;
 
@@ -55,7 +56,7 @@ public class AnnualUpdate implements DatabaseTrackable {
         return childrenUpdates;
     }
 
-    public final CityStrategyEnum getStrategy() {
+    public final AssignmentStrategy getStrategy() {
         return strategy;
     }
 
