@@ -3,6 +3,7 @@ package child;
 import child.scorestrategy.ScoreStrategy;
 import child.scorestrategy.ScoreStrategyFactory;
 import database.DatabaseTrackable;
+import elf.Elf;
 import enums.Category;
 import enums.Cities;
 import enums.ElvesType;
@@ -10,33 +11,32 @@ import enums.ElvesType;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Child implements DatabaseTrackable {
+public class Child implements DatabaseTrackable, ChildObserver {
     private final int id;
-    private String lastName;
-    private String firstName;
+    private final String lastName;
+    private final String firstName;
     private int age;
-    private Cities city;
-    private List<Double> niceScores;
-    private List<Category> giftsPreference;
+    private final Cities city;
+    private final List<Double> niceScores;
+    private final List<Category> giftsPreference;
     private ScoreStrategy scoreStrategy;
-    private Double niceScoreBonus;
-    private ElvesType elf;
+    private final Double niceScoreBonus;
+    private Elf elf;
 
-    public Child(final int id, final String lastName, final String firstName, final int age,
-                 final Cities city, final List<Double> niceScores,
-                 final List<Category> giftsPreference, final ElvesType elf) {
+    private Child(final Builder builder) {
         // Set the default values
-        this.id = id;
-        this.lastName = lastName;
-        this.firstName = firstName;
-        this.age = age;
-        this.city = city;
-        this.niceScores = new ArrayList<>(niceScores);
-        this.giftsPreference = new ArrayList<>(giftsPreference);
-        this.elf = elf;
+        this.id = builder.id;
+        this.lastName = builder.lastName;
+        this.firstName = builder.firstName;
+        this.age = builder.age;
+        this.city = builder.city;
+        this.niceScores = new ArrayList<>(builder.niceScores);
+        this.giftsPreference = new ArrayList<>(builder.giftsPreference);
+        this.elf = builder.elf;
+        this.niceScoreBonus = builder.niceScoreBonus;
 
-        // Set the default niceScoreBonus value to 0
-        niceScoreBonus = 0.0d;
+        // Remove duplicate gift preferences
+        removePreferenceDuplicates();
 
         // Update current score strategy
         updateScoreStrategy();
@@ -70,14 +70,12 @@ public class Child implements DatabaseTrackable {
         return giftsPreference;
     }
 
-    /**
-     * NiceScoreBonus setter following the Builder pattern.
-     * @param niceScoreBonus the new niceScoreBonus
-     * @return the same child
-     */
-    public final Child setNiceScoreBonus(final Double niceScoreBonus) {
-        this.niceScoreBonus = niceScoreBonus;
-        return this;
+    public Elf getElf() {
+        return elf;
+    }
+
+    public void setElf(final Elf elf) {
+        this.elf = elf;
     }
 
     /**
@@ -109,15 +107,9 @@ public class Child implements DatabaseTrackable {
     }
 
     /**
-     * Adds new preferences to the list of preferences. The new preferences are added
-     * to the beginning of the list, in the order they are given, and all duplicates
-     * are removed, always leaving the leftmost clone alive.
-     * @param newGiftPreferences a list of new gift preferences
+     * Remove all duplicate gift preferences.
      */
-    protected final void addPreferences(final List<Category> newGiftPreferences) {
-        // Add all new entries to the beginning
-        giftsPreference.addAll(0, newGiftPreferences);
-
+    private void removePreferenceDuplicates() {
         // Remove all duplicates by going through each gift category
         for (int i = 0; i < giftsPreference.size(); ++i) {
             // Get the current category
@@ -134,6 +126,20 @@ public class Child implements DatabaseTrackable {
     }
 
     /**
+     * Adds new preferences to the list of preferences. The new preferences are added
+     * to the beginning of the list, in the order they are given, and all duplicates
+     * are removed, always leaving the leftmost clone alive.
+     * @param newGiftPreferences a list of new gift preferences
+     */
+    protected final void addPreferences(final List<Category> newGiftPreferences) {
+        // Add all new entries to the beginning
+        giftsPreference.addAll(0, newGiftPreferences);
+
+        // Remove duplicates
+        removePreferenceDuplicates();
+    }
+
+    /**
      * Used in the Observer pattern, is called at the beginning of each yearly round.
      */
     public final void update() {
@@ -145,11 +151,15 @@ public class Child implements DatabaseTrackable {
     }
 
     /**
-     * Gets the child's average score based on the score strategy.
+     * Gets the child's average score based on the score strategy. Value cannot go above 10.
      * @return the child's average score
      */
     public final Double getAverageScore() {
-        return scoreStrategy.getAverageScore(niceScores) * (1.0d + niceScoreBonus / 100.0d);
+        // Get the average score
+        Double averageScore = scoreStrategy.getAverageScore(niceScores);
+
+        // Return the modified average score
+        return Math.min(averageScore + averageScore * niceScoreBonus / 100.0d, 10.0d);
     }
 
     /**
@@ -159,5 +169,52 @@ public class Child implements DatabaseTrackable {
     @Override
     public final String getKey() {
         return String.valueOf(id);
+    }
+
+    /**
+     * Builder class for the Child.
+     */
+    public static class Builder {
+        private final int id;
+        private final String lastName;
+        private final String firstName;
+        private final int age;
+        private final Cities city;
+        private final List<Double> niceScores;
+        private final List<Category> giftsPreference;
+        private Double niceScoreBonus;
+        private final Elf elf;
+
+        public Builder(final int id, final String lastName, final String firstName, final int age,
+                       final Cities city, final List<Double> niceScores,
+                       final List<Category> giftsPreference, final Elf elf) {
+            // Set the default values
+            this.id = id;
+            this.lastName = lastName;
+            this.firstName = firstName;
+            this.age = age;
+            this.city = city;
+            this.niceScores = new ArrayList<>(niceScores);
+            this.giftsPreference = new ArrayList<>(giftsPreference);
+            this.elf = elf;
+        }
+
+        /**
+         * NiceScoreBonus setter following the Builder pattern.
+         * @param niceScoreBonus the new niceScoreBonus
+         * @return the same child
+         */
+        public final Builder setNiceScoreBonus(final Double niceScoreBonus) {
+            this.niceScoreBonus = niceScoreBonus;
+            return this;
+        }
+
+        /**
+         * Build the Child and return the built object.
+         * @return the built child
+         */
+        public Child build() {
+            return new Child(this);
+        }
     }
 }
