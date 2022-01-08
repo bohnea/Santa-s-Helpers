@@ -90,11 +90,12 @@ public final class Main {
      * @param args the arguments used to call the main method
      */
     public static void main(final String[] args) {
-        List<Integer> allTests = IntStream.range(1, Constants.TESTS_NUMBER + 1).boxed().toList();
-        List<Integer> customTests = List.of(15);
+        // Create the output folder
+        File outputFile = new File("output");
+        outputFile.mkdir();
 
         // Go through each test
-        for (int test: allTests) {
+        for (int test: IntStream.range(1, Constants.TESTS_NUMBER + 1).boxed().toList()) {
             // Parse input, store it in database and create a new SantaTracker
             SantaTracker santaTracker = parseAndStoreInput(test);
 

@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.IOException;
 
 public class Checker {
+    private Checker() { }
 
     /**
      * This method is used to calculate total score of the implementation and checkstyle

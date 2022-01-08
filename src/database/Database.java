@@ -85,7 +85,7 @@ public final class Database {
         LinkedHashMap<String, DatabaseTrackable> entityMap = retrieveClassEntities(classKey);
 
         // Add the entities to the appropriate hashmap
-        entities.forEach(entity -> entityMap.putIfAbsent(entity.getKey(), entity));
+        entities.forEach(entity -> entityMap.put(entity.getKey(), entity));
     }
 
     /**

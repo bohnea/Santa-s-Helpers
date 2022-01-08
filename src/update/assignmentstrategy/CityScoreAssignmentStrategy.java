@@ -17,7 +17,8 @@ public class CityScoreAssignmentStrategy implements AssignmentStrategy {
         List<Cities> cities = SortManager.sortByCriteria(
                 Arrays.stream(Cities.values()).toList(),
                 new SortManager.SortCriteria<>(
-                        CityComparators.AVERAGE_SCORE_COMPARATOR.reversed()
+                        CityComparators.AVERAGE_SCORE_COMPARATOR.reversed(),
+                        CityComparators.NAME_COMPARATOR
                 )
         );
 

@@ -24,7 +24,7 @@ public class YellowElf extends Elf {
         }
 
         // Get the cheapest gift of that category
-        Gift cheapestGift = SearchManager.getCheapestGiftOfCategory(preferredCategory);
+        Gift cheapestGift = SearchManager.getCheapestGiftOfCategory(preferredCategory, false);
         if (cheapestGift == null) {
             return new ArrayList<>();
         }

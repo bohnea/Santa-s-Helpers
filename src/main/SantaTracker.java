@@ -120,7 +120,7 @@ public final class SantaTracker implements ChildObservable {
         // Go through the child's preferred categories
         for (Category category: child.getGiftsPreference()) {
             // Get the cheapest gift of the category
-            Gift giftToOffer = SearchManager.getCheapestGiftOfCategory(category);
+            Gift giftToOffer = SearchManager.getCheapestGiftOfCategory(category, true);
 
             // Check if the gift is null, or it's outside the budget
             if (giftToOffer == null || currentSum + giftToOffer.getPrice() > allocatedBudget) {
@@ -180,6 +180,21 @@ public final class SantaTracker implements ChildObservable {
         return new AnnualOutput(childOutput);
     }
 
+    private void updateGiftInDatabase(final Gift gift) {
+        // Attempt to retrieve the gift from the database
+        Gift retrievedGift =
+                (Gift) Database.getInstance().retrieveEntity(Gift.class, gift.getKey());
+
+        // If not found, add the gift to the database
+        if (retrievedGift == null) {
+            Database.getInstance().add(List.of(gift));
+            return;
+        }
+
+        // Otherwise, update the quantity
+        retrievedGift.addQuantity(gift.getQuantity());
+    }
+
     /**
      * Simulates a new yearly round. Notifies children of the year change, updates the
      * information with the new values and offers gifts to the children.
@@ -200,7 +215,7 @@ public final class SantaTracker implements ChildObservable {
         annualUpdate.getChildrenUpdates().forEach(childManager::applyChildUpdate);
 
         // Add the new gifts
-        Database.getInstance().add(annualUpdate.getNewGifts());
+        annualUpdate.getNewGifts().forEach(this::updateGiftInDatabase);
 
         // Set the new budget
         santaBudget = annualUpdate.getNewSantaBudget();

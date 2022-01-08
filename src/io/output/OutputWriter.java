@@ -18,6 +18,13 @@ public final class OutputWriter {
      * @param output the Output object to write to the file
      */
     public static void writeOutput(final File outputFile, final Output output) {
+        try {
+            // Create the output file
+            outputFile.createNewFile();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         // Create an object writer
         ObjectWriter objWriter = new ObjectMapper().writerWithDefaultPrettyPrinter();
 
