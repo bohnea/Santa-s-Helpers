@@ -1,5 +1,6 @@
 package child;
 
+import elf.ElfFactory;
 import io.input.child.ChildInput;
 
 import java.util.List;
@@ -16,7 +17,7 @@ public final class ChildFactory {
      * @return the created child
      */
     public static Child createChild(final ChildInput childInput) {
-        return new Child(
+        return new Child.Builder(
                 childInput.getId(),
                 childInput.getLastName(),
                 childInput.getFirstName(),
@@ -24,7 +25,8 @@ public final class ChildFactory {
                 childInput.getCity(),
                 List.of(childInput.getNiceScore()),
                 childInput.getGiftsPreferences(),
-                childInput.getElf()
-        ).setNiceScoreBonus(childInput.getNiceScoreBonus());
+                ElfFactory.createElf(childInput.getElf())
+        ).setNiceScoreBonus(childInput.getNiceScoreBonus())
+                .build();
     }
 }

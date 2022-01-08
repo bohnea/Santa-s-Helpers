@@ -1,6 +1,7 @@
 package child;
 
 import database.Database;
+import elf.ElfFactory;
 import update.ChildUpdate;
 
 public final class ChildManager {
@@ -24,5 +25,8 @@ public final class ChildManager {
 
         // Add the new gift preferences to the child's preferences
         childToUpdate.addPreferences(childUpdate.getGiftsPreferences());
+
+        // Change the child's elf
+        childToUpdate.setElf(ElfFactory.createElf(childUpdate.getElfType()));
     }
 }

@@ -16,9 +16,13 @@ import update.AnnualUpdate;
 import update.assignmentstrategy.AssignmentStrategy;
 import update.assignmentstrategy.AssignmentStrategyFactory;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-public final class SantaTracker {
+public final class SantaTracker implements ChildObservable {
     private final int numberOfYears;
     private Double santaBudget;
     private final Map<Integer, Double> childrenBudgets;
@@ -79,7 +83,15 @@ public final class SantaTracker {
 
         // For each child, calculate his allocated budget
         children.forEach(
-                child -> childrenBudgets.put(child.getId(), child.getAverageScore() * budgetUnit)
+                child -> childrenBudgets.put(
+                        child.getId(),
+
+                        // Multiply the child average score by the budget unit
+                        // and apply Elf modifications
+                        child.getElf().applyBudgetModifier(
+                                child.getAverageScore() * budgetUnit
+                        )
+                )
         );
     }
 
@@ -87,7 +99,7 @@ public final class SantaTracker {
      * Small-scale observer pattern which updates all children in the database when
      * a new annual update takes place.
      */
-    private void notifyChildren() {
+    public void notifyObservers() {
         // Get all children and notify them
         SearchManager.getChildrenFromDatabase().forEach(Child::update);
     }
@@ -121,6 +133,11 @@ public final class SantaTracker {
 
             // Reduce the gift's quantity
             giftToOffer.reduceQuantity();
+        }
+
+        // Apply elf gift modifier if the receivedGifts list is empty
+        if (receivedGifts.isEmpty()) {
+            receivedGifts.addAll(child.getElf().applyExtraGifts(child));
         }
 
         // Return the list of received gifts
@@ -171,7 +188,7 @@ public final class SantaTracker {
      */
     private AnnualOutput advanceYear(final AnnualUpdate annualUpdate) {
         // Notify all children of the year change
-        notifyChildren();
+        notifyObservers();
 
         // Add the new children
         Database.getInstance().add(annualUpdate.getNewChildren());
