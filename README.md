@@ -151,7 +151,7 @@ Child updates contain 3 fields:
 * niceScore - a new nice score to add to the child
 * giftsPreferences - a list of new gift categories to add to the child
 
-###Assignment Strategies
+### Assignment Strategies
 There are 3 different strategies:
 * _sort by ID_: sorts the children increasingly by ID
 * _sort by average score_: sorts the children decreasingly by their average score, then
