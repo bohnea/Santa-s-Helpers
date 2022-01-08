@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import common.Constants;
 import enums.Category;
 import enums.Cities;
-import enums.ElvesType;
 import io.output.gift.GiftOutput;
 
 import java.util.ArrayList;

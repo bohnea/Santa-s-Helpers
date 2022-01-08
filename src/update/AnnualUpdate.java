@@ -2,7 +2,6 @@ package update;
 
 import child.Child;
 import database.DatabaseTrackable;
-import enums.CityStrategyEnum;
 import gift.Gift;
 import update.assignmentstrategy.AssignmentStrategy;
 

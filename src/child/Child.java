@@ -6,12 +6,11 @@ import database.DatabaseTrackable;
 import elf.Elf;
 import enums.Category;
 import enums.Cities;
-import enums.ElvesType;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Child implements DatabaseTrackable, ChildObserver {
+public final class Child implements DatabaseTrackable, ChildObserver {
     private final int id;
     private final String lastName;
     private final String firstName;
@@ -42,31 +41,31 @@ public class Child implements DatabaseTrackable, ChildObserver {
         updateScoreStrategy();
     }
 
-    public final int getId() {
+    public int getId() {
         return id;
     }
 
-    public final String getLastName() {
+    public String getLastName() {
         return lastName;
     }
 
-    public final String getFirstName() {
+    public String getFirstName() {
         return firstName;
     }
 
-    public final int getAge() {
+    public int getAge() {
         return age;
     }
 
-    public final Cities getCity() {
+    public Cities getCity() {
         return city;
     }
 
-    public final List<Double> getNiceScores() {
+    public List<Double> getNiceScores() {
         return niceScores;
     }
 
-    public final List<Category> getGiftsPreference() {
+    public List<Category> getGiftsPreference() {
         return giftsPreference;
     }
 
@@ -96,7 +95,7 @@ public class Child implements DatabaseTrackable, ChildObserver {
      * Adds a new nice score to the list of nice scores.
      * @param niceScore the nice score to add
      */
-    protected final void addNiceScore(final Double niceScore) {
+    void addNiceScore(final Double niceScore) {
         // If the given score is null, return
         if (niceScore == null) {
             return;
@@ -107,7 +106,7 @@ public class Child implements DatabaseTrackable, ChildObserver {
     }
 
     /**
-     * Remove all duplicate gift preferences.
+     * Removes all duplicate gift preferences, always leaving the leftmost clone alive.
      */
     private void removePreferenceDuplicates() {
         // Remove all duplicates by going through each gift category
@@ -127,11 +126,11 @@ public class Child implements DatabaseTrackable, ChildObserver {
 
     /**
      * Adds new preferences to the list of preferences. The new preferences are added
-     * to the beginning of the list, in the order they are given, and all duplicates
-     * are removed, always leaving the leftmost clone alive.
+     * to the beginning of the list, in the order they are given. All duplicates
+     * are removed from the list.
      * @param newGiftPreferences a list of new gift preferences
      */
-    protected final void addPreferences(final List<Category> newGiftPreferences) {
+    void addPreferences(final List<Category> newGiftPreferences) {
         // Add all new entries to the beginning
         giftsPreference.addAll(0, newGiftPreferences);
 
@@ -142,7 +141,7 @@ public class Child implements DatabaseTrackable, ChildObserver {
     /**
      * Used in the Observer pattern, is called at the beginning of each yearly round.
      */
-    public final void update() {
+    public void update() {
         // Add a year to the age
         incrementAge();
 
@@ -154,12 +153,17 @@ public class Child implements DatabaseTrackable, ChildObserver {
      * Gets the child's average score based on the score strategy. Value cannot go above 10.
      * @return the child's average score
      */
-    public final Double getAverageScore() {
+    public Double getAverageScore() {
+        // Declare constant values
+        final double oneHundred = 100.0d;
+        final double maxAverageScore = 10.0d;
+
         // Get the average score
         Double averageScore = scoreStrategy.getAverageScore(niceScores);
 
         // Return the modified average score
-        return Math.min(averageScore + averageScore * niceScoreBonus / 100.0d, 10.0d);
+        return Math.min(averageScore + averageScore
+                * niceScoreBonus / oneHundred, maxAverageScore);
     }
 
     /**
@@ -167,7 +171,7 @@ public class Child implements DatabaseTrackable, ChildObserver {
      * @return the primary key
      */
     @Override
-    public final String getKey() {
+    public String getKey() {
         return String.valueOf(id);
     }
 
@@ -201,16 +205,16 @@ public class Child implements DatabaseTrackable, ChildObserver {
 
         /**
          * NiceScoreBonus setter following the Builder pattern.
-         * @param niceScoreBonus the new niceScoreBonus
+         * @param newNiceScoreBonus the new niceScoreBonus
          * @return the same child
          */
-        public final Builder setNiceScoreBonus(final Double niceScoreBonus) {
-            this.niceScoreBonus = niceScoreBonus;
+        public final Builder setNiceScoreBonus(final Double newNiceScoreBonus) {
+            this.niceScoreBonus = newNiceScoreBonus;
             return this;
         }
 
         /**
-         * Build the Child and return the built object.
+         * Builds the Child and returns the built object.
          * @return the built child
          */
         public Child build() {

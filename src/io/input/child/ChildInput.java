@@ -97,19 +97,19 @@ public class ChildInput {
         this.giftsPreferences = giftsPreferences;
     }
 
-    public Double getNiceScoreBonus() {
+    public final Double getNiceScoreBonus() {
         return niceScoreBonus;
     }
 
-    public void setNiceScoreBonus(final Double niceScoreBonus) {
+    public final void setNiceScoreBonus(final Double niceScoreBonus) {
         this.niceScoreBonus = niceScoreBonus;
     }
 
-    public ElvesType getElf() {
+    public final ElvesType getElf() {
         return elf;
     }
 
-    public void setElf(final ElvesType elf) {
+    public final void setElf(final ElvesType elf) {
         this.elf = elf;
     }
 }
