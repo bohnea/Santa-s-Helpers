@@ -11,7 +11,13 @@ public final class Constants {
     public static final Integer TESTS_NUMBER = 30;
     public static final Integer MAXIMUM_ERROR_CHECKSTYLE = 30;
     public static final Integer CHECKSTYLE_POINTS = 10;
-    public static final Integer TESTS_NUMBER_SMALL = 15;
+    public static final Integer TESTS_1_POINT = 1;
+    public static final Integer TESTS_2_POINTS = 2;
+    public static final Integer TESTS_3_POINTS = 3;
+    public static final Integer TESTS_4_POINTS = 4;
+    public static final Integer TESTS_MAX_1_PCT = 12;
+    public static final Integer TESTS_MAX_2_PCT = 19;
+    public static final Integer TESTS_MAX_3_PCT = 29;
 
     // JSON Names
     public static final String NUMBER_OF_YEARS = "numberOfYears";

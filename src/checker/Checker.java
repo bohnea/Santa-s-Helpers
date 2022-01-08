@@ -2,11 +2,20 @@ package checker;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import common.Constants;
 
 import java.io.File;
 import java.io.IOException;
 
-public class Checker {
+/**
+ * MODIFIED FOR CHECKSTYLE. Only changes are:
+ *  - separation on multiple lines
+ *  - extra whitespace
+ *  - hardcoded numbers replaced with constant variables
+ *
+ * You can replace this checker with the real one if you wish.
+ */
+public final class Checker {
     private Checker() { }
 
     /**
@@ -33,7 +42,7 @@ public class Checker {
      */
     private static void calculateScoreAllTests() {
         int totalScore = 0;
-        for (int i = 1; i <= 30; i++) {
+        for (int i = 1; i <= Constants.TESTS_NUMBER; i++) {
             totalScore += calculateScore(i);
         }
         System.out.println("-----------------------------------------------------");
@@ -48,28 +57,31 @@ public class Checker {
      * @param testNumber
      *          the testNumber you want to calculate score for
      * @return
-     *          the score of that test (1 for tests : 1 -12 ) (2 for tests : 13 - 19) (3 for tests : 20 - 29) (4 for test : 30)
+     *          the score of that test (1 for tests : 1 -12 ) (2 for tests : 13 - 19)
+     *          (3 for tests : 20 - 29) (4 for test : 30)
      */
-    public static int calculateScore(Integer testNumber) {
+    public static int calculateScore(final Integer testNumber) {
         if (checkOutput(testNumber)) {
-            System.out.println("test" + testNumber + ".json ----------------------------- PASSED (+" + getScoreForTest(testNumber) + ")");
+            System.out.println("test" + testNumber + ".json -----------------"
+                    + "------------ PASSED (+" + getScoreForTest(testNumber) + ")");
             return getScoreForTest(testNumber);
-        }
-        else {
-            System.out.println("test" + testNumber + ".json  ----------------------------- FAILED (+0)");
+        } else {
+            System.out.println("test" + testNumber + ".json  ----------------"
+                    + "------------- FAILED (+0)");
             return 0;
         }
     }
 
     /**
-     * It compares the /output/out_{testNumber}.json file with the /ref/ref_test{testNumber}.json
+     * It compares the /output/out_{testNumber}.json file
+     * with the /ref/ref_test{testNumber}.json
      *
      * @param testNumber
      *          the testNumber you want to calculate score for
      * @return
      *          if the two files are equal or not
      */
-    private static boolean checkOutput(Integer testNumber) {
+    private static boolean checkOutput(final Integer testNumber) {
         ObjectMapper mapper = new ObjectMapper();
 
         try {
@@ -89,18 +101,21 @@ public class Checker {
      * @param testNumber
      *      the testNumber you want to calculate score for
      * @return
-     *      the score of that test (1 for tests : 1 -12 ) (2 for tests : 13 - 19) (3 for tests : 20 - 29) (4 for test : 30)
+     *      the score of that test (1 for tests : 1 -12 ) (2 for tests : 13 - 19)
+     *      (3 for tests : 20 - 29) (4 for test : 30)
      */
-    private static int getScoreForTest(Integer testNumber) {
-        if (testNumber >=1 && testNumber <= 12) {
-            return 1;
+    private static int getScoreForTest(final Integer testNumber) {
+        if (testNumber >= 1 && testNumber <= Constants.TESTS_MAX_1_PCT) {
+            return Constants.TESTS_1_POINT;
         }
-        if (testNumber >=13 && testNumber <= 19) {
-            return 2;
+        if (testNumber >= Constants.TESTS_MAX_1_PCT + 1
+                && testNumber <= Constants.TESTS_MAX_2_PCT) {
+            return Constants.TESTS_2_POINTS;
         }
-        if (testNumber >=20 && testNumber <= 29) {
-            return 3;
+        if (testNumber >= Constants.TESTS_MAX_2_PCT + 1
+                && testNumber <= Constants.TESTS_MAX_3_PCT) {
+            return Constants.TESTS_3_POINTS;
         }
-        return 4;
+        return Constants.TESTS_4_POINTS;
     }
 }

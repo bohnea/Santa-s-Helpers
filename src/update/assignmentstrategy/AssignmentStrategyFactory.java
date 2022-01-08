@@ -1,6 +1,5 @@
 package update.assignmentstrategy;
 
-import common.Constants;
 import enums.CityStrategyEnum;
 
 public final class AssignmentStrategyFactory {

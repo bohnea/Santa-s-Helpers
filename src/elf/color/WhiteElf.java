@@ -7,12 +7,22 @@ import gift.Gift;
 import java.util.ArrayList;
 import java.util.List;
 
-public class WhiteElf extends Elf {
+public final class WhiteElf extends Elf {
+    /**
+     * Leaves the given budget unmodified.
+     * @param budget the budget to modify
+     * @return the same given budget
+     */
     @Override
     public double applyBudgetModifier(final Double budget) {
         return budget;
     }
 
+    /**
+     * Doesn't return any gifts.
+     * @param child the child
+     * @return an empty list
+     */
     @Override
     public List<Gift> applyExtraGifts(final Child child) {
         return new ArrayList<>();

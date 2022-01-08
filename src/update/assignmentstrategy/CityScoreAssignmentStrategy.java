@@ -11,6 +11,12 @@ import java.util.Arrays;
 import java.util.List;
 
 public class CityScoreAssignmentStrategy implements AssignmentStrategy {
+    /**
+     * First, sorts all cities in decreasing order by their average rating. Then,
+     * from the sorted list of cities, children in each city are ordered
+     * increasingly by ID and added to a list, then returned.
+     * @return the list of ordered children
+     */
     @Override
     public final List<Child> getChildOrder() {
         // Sort all cities by their average scores

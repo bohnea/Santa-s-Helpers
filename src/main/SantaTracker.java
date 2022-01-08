@@ -149,7 +149,7 @@ public final class SantaTracker implements ChildObservable {
      * @param assignmentStrategy the order in which to assign gifts to children
      * @return the current year's output
      */
-    private AnnualOutput offerGiftsToAll(AssignmentStrategy assignmentStrategy) {
+    private AnnualOutput offerGiftsToAll(final AssignmentStrategy assignmentStrategy) {
         // Remove children over 18 years old
         removeYoungAdults();
 

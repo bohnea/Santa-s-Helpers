@@ -29,7 +29,7 @@ public class Gift implements DatabaseTrackable {
         return category;
     }
 
-    public int getQuantity() {
+    public final int getQuantity() {
         return quantity;
     }
 
@@ -42,10 +42,10 @@ public class Gift implements DatabaseTrackable {
 
     /**
      * Adds the given number to the gift's quantity.
-     * @param quantity the added quantity
+     * @param quantityToAdd the added quantity
      */
-    public final void addQuantity(final int quantity) {
-        this.quantity += quantity;
+    public final void addQuantity(final int quantityToAdd) {
+        this.quantity += quantityToAdd;
     }
 
     /**

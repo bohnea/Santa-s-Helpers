@@ -43,6 +43,11 @@ public enum Cities {
         return value;
     }
 
+    /**
+     * Takes all children from the database that live in this city, and calculates
+     * the average of all children's average scores.
+     * @return the average rating of the city
+     */
     public Double getAverageRating() {
         // Get the children from the current city
         List<Child> children = SearchManager.getChildrenByCity(this);

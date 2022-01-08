@@ -14,7 +14,7 @@ public final class CityComparators {
     public static final Comparator<Cities> AVERAGE_SCORE_COMPARATOR =
             Comparator.comparingDouble(Cities::getAverageRating);
 
-    // Sort ascending lexicographic by name
+    // Sort lexicographic by name
     public static final Comparator<Cities> NAME_COMPARATOR =
             Comparator.comparing(Cities::getValue);
 }
