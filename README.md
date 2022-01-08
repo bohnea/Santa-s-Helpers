@@ -33,9 +33,12 @@ Every year there are multiple steps:
 
 ### The Gift Distribution Algorithm
 The steps are:
-* each child is assigned a maximum budget that Santa cannot go over
+* each child is assigned a maximum budget, based on the child's average score, that Santa cannot 
+  go over
+* the child's budget can modified by his assigned elf (Black and Pink ones)
 * Santa attempts to buy at most one gift from each child's preferred gift categories, from left
   to right
+* some elves (Yellow ones) can jump in and offer extra gifts
 
 ## The Database
 The database is a very important part of this project, as it holds the information of all the
@@ -66,13 +69,17 @@ The actions that can be done on the database are the following:
   * clears the entire database
 
 ### Search Manager
-
-```TO_COMPLETE```
+A utility class that acts as an intermediary between the database and the rest of the program.
+Presents many methods that are used to extract data from the database -- methods such as getting all
+gifts, all children that live in a certain city, the cheapest gift stored in the database and a few
+others.
 
 
 ### Sort Manager
-
-```TO_COMPLETE```
+Utility class used to sort lists of entities by multiple Comparators. Uses another SortCriteria
+object that can hold a list of Comparators, the class itself implementing the Comparator
+interface. The compare method of the SortCriteria class goes through each Comparator and returns
+the result of the comparison, if it's different from 0, or goes onto the next one.
 
 ## Main Entities
 The main entities of this project are considered to be the ones that are stored in the database,
@@ -87,9 +94,13 @@ Those classes are:
     SantaTracker whenever a new annual update happens 
   * a ChildFactory class (Factory pattern) is used to create new children from JSON input
     (ChildInput class)
+  * the Builder pattern has been implemented to accommodate for the new optional field
+    'niceScoreBonus'
   * there is a ChildManager used specifically to apply updates to children
   * based on the age, each child uses a Strategy to calculate their average score; the strategy is
     updated when the child is created and every time the child grows 1 year older
+  * each child has an assigned elf that can affect different aspects during the gift distribution
+    process
 
 #### Score Strategies
 * the score strategies are created with the help of a ScoreStrategyFactory, taking in the age and
@@ -99,11 +110,21 @@ Those classes are:
   * _KidScoreStrategy_: returns an average of the child's nice scores
   * _TeenScoreStrategy_: returns a weighted average of the child's nice scores
 
+#### Elves
+* there are 4 elves
+  * _Yellow Elves_: if the child hasn't received any gifts, the elf attempts to give him one for
+    free; the gift is the cheapest one from the child's preferred category, only if it's in stock
+  * _Black Elves_: reduces the child's assigned budget by 30%
+  * _Pink Elves_: increases the child's assigned budget by 30%
+  * _White Elves_: they don't influence anything
+
 ### Gift
 * holds information describing a gift
 * notable details:
   * a GiftFactory class (Factory pattern) is used to create new gifts from JSON input (GiftInput
     class)
+  * each gift has a certain quantity that gets reduced by one when the gift is distributed 
+    to a child
 
 
 ### Annual Update
@@ -121,12 +142,22 @@ an input object and turns it into the desired AnnualUpdate / ChildUpdate class.
 The annual updates are applied within the SantaTracker class, whereas the child updates are applied
 with the help of the ChildManager class.
 
+Each annual update also includes a gift distribution strategy, which tells the SantaTracker in what
+order to sort the children to which the gifts will be distributed.
+
 ### Child Updates
 Child updates contain 3 fields:
 * ID - the id of the child on which the update should be applied
 * niceScore - a new nice score to add to the child
 * giftsPreferences - a list of new gift categories to add to the child
 
+###Assignment Strategies
+There are 3 different strategies:
+* _sort by ID_: sorts the children increasingly by ID
+* _sort by average score_: sorts the children decreasingly by their average score, then
+  increasingly by ID
+* _sort by their city's average score_: sorts first decreasingly by their city's average score,
+  then increasingly by ID
 
 ## Input / Output
 ### Input
