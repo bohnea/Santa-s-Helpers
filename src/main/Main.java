@@ -4,15 +4,12 @@ import checker.Checker;
 import child.Child;
 import common.Constants;
 import database.Database;
-import child.ChildFactory;
 import gift.Gift;
-import gift.GiftFactory;
 import io.input.Input;
 import io.input.InputReader;
 import io.output.Output;
 import io.output.OutputWriter;
 import update.AnnualUpdate;
-import update.UpdateFactory;
 
 import java.io.File;
 import java.util.List;
@@ -63,16 +60,16 @@ public final class Main {
         // Store the rest of the information in the database
         List<Child> children = input.getInitialDataInput()
                 .getChildInput().stream()
-                .map(ChildFactory::createChild)
+                .map(Child::new)
                 .toList();
 
         List<Gift> gifts = input.getInitialDataInput()
                 .getGiftInput().stream()
-                .map(GiftFactory::createGift)
+                .map(Gift::new)
                 .toList();
 
         List<AnnualUpdate> annualUpdates = input.getAnnualUpdates().stream()
-                .map(UpdateFactory.AnnualUpdateFactory::createAnnualUpdate)
+                .map(AnnualUpdate::new)
                 .toList();
 
         // Store them in the database

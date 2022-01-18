@@ -2,6 +2,7 @@ package gift;
 
 import database.DatabaseTrackable;
 import enums.Category;
+import io.input.gift.GiftInput;
 
 public class Gift implements DatabaseTrackable {
     private final String productName;
@@ -15,6 +16,15 @@ public class Gift implements DatabaseTrackable {
         this.price = price;
         this.category = category;
         this.quantity = quantity;
+    }
+
+    public Gift(final GiftInput giftInput) {
+        this(
+                giftInput.getProductName(),
+                giftInput.getPrice(),
+                giftInput.getCategory(),
+                giftInput.getQuantity()
+        );
     }
 
     public final String getProductName() {

@@ -11,7 +11,6 @@ import gift.Gift;
 import io.output.AnnualOutput;
 import io.output.Output;
 import io.output.child.ChildOutput;
-import io.output.child.ChildOutputFactory;
 import update.AnnualUpdate;
 import update.assignmentstrategy.AssignmentStrategy;
 import update.assignmentstrategy.AssignmentStrategyFactory;
@@ -166,7 +165,7 @@ public final class SantaTracker implements ChildObservable {
                     offerGiftsToChild(child, childrenBudgets.get(child.getId()));
 
             // Add the result to the list
-            childOutput.add(ChildOutputFactory.createChildOutput(
+            childOutput.add(new ChildOutput(
                     child,
                     childrenBudgets.get(child.getId()),
                     receivedGifts

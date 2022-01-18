@@ -1,9 +1,11 @@
 package io.output.child;
 
+import child.Child;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import common.Constants;
 import enums.Category;
 import enums.Cities;
+import gift.Gift;
 import io.output.gift.GiftOutput;
 
 import java.util.ArrayList;
@@ -57,6 +59,22 @@ public class ChildOutput {
         this.niceScoreHistory = new ArrayList<>(niceScoreHistory);
         this.assignedBudget = assignedBudget;
         this.receivedGifts = new ArrayList<>(receivedGifts);
+    }
+
+    public ChildOutput(final Child child, final Double assignedBudget,
+                       final List<Gift> receivedGifts) {
+        this(
+                child.getId(),
+                child.getLastName(),
+                child.getFirstName(),
+                child.getCity(),
+                child.getAge(),
+                child.getGiftsPreference(),
+                child.getAverageScore(),
+                child.getNiceScores(),
+                assignedBudget,
+                receivedGifts.stream().map(GiftOutput::new).toList()
+        );
     }
 
     public final Integer getId() {

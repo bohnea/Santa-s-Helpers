@@ -4,8 +4,10 @@ import child.scorestrategy.ScoreStrategy;
 import child.scorestrategy.ScoreStrategyFactory;
 import database.DatabaseTrackable;
 import elf.Elf;
+import elf.ElfFactory;
 import enums.Category;
 import enums.Cities;
+import io.input.child.ChildInput;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,6 +41,19 @@ public final class Child implements DatabaseTrackable, ChildObserver {
 
         // Update current score strategy
         updateScoreStrategy();
+    }
+
+    public Child(final ChildInput childInput) {
+        this(new Child.Builder(
+                childInput.getId(),
+                childInput.getLastName(),
+                childInput.getFirstName(),
+                childInput.getAge(),
+                childInput.getCity(),
+                List.of(childInput.getNiceScore()),
+                childInput.getGiftsPreferences(),
+                ElfFactory.createElf(childInput.getElf())
+        ).setNiceScoreBonus(childInput.getNiceScoreBonus()));
     }
 
     public int getId() {
