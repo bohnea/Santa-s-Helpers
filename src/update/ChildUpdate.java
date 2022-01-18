@@ -2,6 +2,7 @@ package update;
 
 import enums.Category;
 import enums.ElvesType;
+import io.input.update.ChildUpdateInput;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +20,15 @@ public class ChildUpdate {
         this.niceScore = niceScore;
         this.giftsPreferences = new ArrayList<>(giftsPreferences);
         this.elfType = elfType;
+    }
+
+    public ChildUpdate(final ChildUpdateInput childUpdateInput) {
+        this(
+                childUpdateInput.getId(),
+                childUpdateInput.getNiceScore(),
+                childUpdateInput.getGiftsPreferences(),
+                childUpdateInput.getElf()
+        );
     }
 
     public final int getId() {

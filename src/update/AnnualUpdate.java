@@ -3,7 +3,9 @@ package update;
 import child.Child;
 import database.DatabaseTrackable;
 import gift.Gift;
+import io.input.update.AnnualUpdateInput;
 import update.assignmentstrategy.AssignmentStrategy;
+import update.assignmentstrategy.AssignmentStrategyFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +35,19 @@ public class AnnualUpdate implements DatabaseTrackable {
         this.newChildren = new ArrayList<>(newChildren);
         this.childrenUpdates = new ArrayList<>(childrenUpdates);
         this.strategy = strategy;
+    }
+
+    public AnnualUpdate(final AnnualUpdateInput annualUpdateInput) {
+        this(
+                annualUpdateInput.getNewSantaBudget(),
+                annualUpdateInput.getNewGifts().stream()
+                        .map(Gift::new).toList(),
+                annualUpdateInput.getNewChildren().stream()
+                        .map(Child::new).toList(),
+                annualUpdateInput.getChildrenUpdates().stream()
+                        .map(ChildUpdate::new).toList(),
+                AssignmentStrategyFactory.createGiftStrategy(annualUpdateInput.getStrategy())
+        );
     }
 
     public final int getId() {
