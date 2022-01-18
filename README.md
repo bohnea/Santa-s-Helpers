@@ -92,8 +92,6 @@ Those classes are:
 * notable details:
   * has an ```update()``` method used for the Observer pattern; the object is notified by the
     SantaTracker whenever a new annual update happens 
-  * a ChildFactory class (Factory pattern) is used to create new children from JSON input
-    (ChildInput class)
   * the Builder pattern has been implemented to accommodate for the new optional field
     'niceScoreBonus'
   * there is a ChildManager used specifically to apply updates to children
@@ -121,8 +119,6 @@ Those classes are:
 ### Gift
 * holds information describing a gift
 * notable details:
-  * a GiftFactory class (Factory pattern) is used to create new gifts from JSON input (GiftInput
-    class)
   * each gift has a certain quantity that gets reduced by one when the gift is distributed 
     to a child
 
@@ -135,9 +131,6 @@ Those classes are:
 Annual updates represent the changes that take place each year, changes that add new entities and
 affect old ones. Each annual update contains a list of new children and gifts to be added to the
 database, alongside a new yearly budget and, very importantly, a list of child updates.
-
-Both annual updates and child updates are created with the use of an UpdateFactory that takes in
-an input object and turns it into the desired AnnualUpdate / ChildUpdate class.
 
 The annual updates are applied within the SantaTracker class, whereas the child updates are applied
 with the help of the ChildManager class.
@@ -167,12 +160,7 @@ database. The data is parsed with the help of the Jackson library -- this was do
 Input class for each object in the JSON file, and marking each field with a ```@JsonProperty```
 annotation. All the data was stored in a single Input class.
 
-The input data was then stored in the corresponding non-input classes with the help of many
-Factory classes.
-
 ### Output
 Every gift distribution event generates output that needs to be written to a file. It's first
 added to a list in a general Output object, that is further written to the corresponding output
 test file, with the help of Jackson.
-
-The different (NameOfObject)Output objects are created using Factory classes.
