@@ -43,19 +43,6 @@ public final class Child implements DatabaseTrackable, ChildObserver {
         updateScoreStrategy();
     }
 
-    public Child(final ChildInput childInput) {
-        this(new Child.Builder(
-                childInput.getId(),
-                childInput.getLastName(),
-                childInput.getFirstName(),
-                childInput.getAge(),
-                childInput.getCity(),
-                List.of(childInput.getNiceScore()),
-                childInput.getGiftsPreferences(),
-                ElfFactory.createElf(childInput.getElf())
-        ).setNiceScoreBonus(childInput.getNiceScoreBonus()));
-    }
-
     public int getId() {
         return id;
     }
@@ -216,6 +203,21 @@ public final class Child implements DatabaseTrackable, ChildObserver {
             this.niceScores = new ArrayList<>(niceScores);
             this.giftsPreference = new ArrayList<>(giftsPreference);
             this.elf = elf;
+        }
+
+        public Builder(final ChildInput childInput) {
+            this(
+                    childInput.getId(),
+                    childInput.getLastName(),
+                    childInput.getFirstName(),
+                    childInput.getAge(),
+                    childInput.getCity(),
+                    List.of(childInput.getNiceScore()),
+                    childInput.getGiftsPreferences(),
+                    ElfFactory.createElf(childInput.getElf())
+            );
+
+            setNiceScoreBonus(childInput.getNiceScoreBonus());
         }
 
         /**

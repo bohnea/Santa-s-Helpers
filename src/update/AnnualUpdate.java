@@ -43,7 +43,7 @@ public class AnnualUpdate implements DatabaseTrackable {
                 annualUpdateInput.getNewGifts().stream()
                         .map(Gift::new).toList(),
                 annualUpdateInput.getNewChildren().stream()
-                        .map(Child::new).toList(),
+                        .map(Child.Builder::new).map(Child.Builder::build).toList(),
                 annualUpdateInput.getChildrenUpdates().stream()
                         .map(ChildUpdate::new).toList(),
                 AssignmentStrategyFactory.createGiftStrategy(annualUpdateInput.getStrategy())
