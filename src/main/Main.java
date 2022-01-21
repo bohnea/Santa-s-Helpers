@@ -60,7 +60,8 @@ public final class Main {
         // Store the rest of the information in the database
         List<Child> children = input.getInitialDataInput()
                 .getChildInput().stream()
-                .map(Child::new)
+                .map(Child.Builder::new)
+                .map(Child.Builder::build)
                 .toList();
 
         List<Gift> gifts = input.getInitialDataInput()
